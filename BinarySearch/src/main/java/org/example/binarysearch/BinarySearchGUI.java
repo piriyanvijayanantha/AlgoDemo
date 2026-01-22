@@ -32,7 +32,8 @@ public class BinarySearchGUI extends Application {
         root.setTop(createInputSection());
         root.setCenter(createVisualizationSection());
         root.setRight(createControlSection());
-        Scene scene = new Scene(root, 900, 500);
+        root.setLeft(createInfoBox());
+        Scene scene = new Scene(root, 1100, 500);
         stage.setTitle("Binary Search Demonstrator");
         stage.setScene(scene);
         stage.show();
@@ -103,7 +104,7 @@ public class BinarySearchGUI extends Application {
             if (binarySearchEngine.undo()) {
                 updateDisplay();
             } else {
-                statusLabel.setText("Keine vorherigen Schritte!");
+                statusLabel.setText("Keine vorherigen Schritte");
                 statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: red;");
             }
         });
@@ -200,7 +201,7 @@ public class BinarySearchGUI extends Application {
             if (i == engineI) {
                 arrowLabels[i].setText("▲ i");  // Links von Element i
                 arrowLabels[i].setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: blue;");
-            } else if (i == engineJ + 1) {  // ← WICHTIG: j+1 für rechts vom Element j
+            } else if (i == engineJ) {  // ← WICHTIG: j+1 für rechts vom Element j
                 arrowLabels[i].setText("▲ j");
                 arrowLabels[i].setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: red;");
             } else {
@@ -262,9 +263,9 @@ public class BinarySearchGUI extends Application {
         //Pfeile
         HBox arrowBox = new HBox(5);
         arrowBox.setAlignment(Pos.CENTER);
-        arrowLabels = new Label[array.length + 1]; // +1 für Position nach letztem Element
+        arrowLabels = new Label[array.length];
 
-        for (int i = 0; i <= array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             Label arrow = new Label("");
             arrow.setMinWidth(50);
             arrow.setAlignment(Pos.CENTER);
@@ -272,8 +273,42 @@ public class BinarySearchGUI extends Application {
             arrowLabels[i] = arrow;
             arrowBox.getChildren().add(arrow);
         }
-
         visualizationBox.getChildren().add(arrowBox);
+    }
+
+    private VBox createInfoBox() {
+        VBox infoBox = new VBox(8);
+        infoBox.setPadding(new Insets(15));
+        infoBox.setStyle("-fx-background-color: white; -fx-border-color: blue; -fx-border-width: 2;");
+        infoBox.setMaxWidth(250);
+
+        Label title = new Label("ℹ Algorithmus-Info");
+        title.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: blue;");
+
+        Label variablenInfo = new Label(
+                "Variablen:\n" +
+                        "• i = linke Grenze (inklusiv)\n" +
+                        "• j = rechte Grenze (inklusiv)\n" +
+                        "• m = Mitte: (i + j) / 2"
+        );
+        variablenInfo.setStyle("-fx-font-size: 11px;");
+
+        Label invarianteInfo = new Label(
+                "Invariante:\n" +
+                        "Der Suchwert liegt (wenn vorhanden)\n" +
+                        "im Bereich [i..j]."
+        );
+        invarianteInfo.setStyle("-fx-font-size: 11px; -fx-font-style: italic;");
+
+        Label abbruchInfo = new Label(
+                "Abbruch:\n" +
+                        "• i > j → nicht gefunden\n" +
+                        "• array[m] == target → gefunden"
+        );
+        abbruchInfo.setStyle("-fx-font-size: 11px;");
+
+        infoBox.getChildren().addAll(title, variablenInfo, invarianteInfo, abbruchInfo);
+        return infoBox;
     }
 
     private boolean isSorted(int[] arr) {
