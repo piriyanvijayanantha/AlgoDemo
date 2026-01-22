@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.binarysearch.engine.BinarySearchEngine;
 
 public class BinarySearchGUI extends Application {
     private BinarySearchEngine binarySearchEngine;
@@ -98,6 +99,14 @@ public class BinarySearchGUI extends Application {
 
         Button undoBtn = new Button("Undo");
         undoBtn.setPrefWidth(100);
+        undoBtn.setOnAction(e -> {
+            if (binarySearchEngine.undo()) {
+                updateDisplay();
+            } else {
+                statusLabel.setText("Keine vorherigen Schritte!");
+                statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: red;");
+            }
+        });
 
         Button resetBtn = new Button("Reset");
         resetBtn.setPrefWidth(100);

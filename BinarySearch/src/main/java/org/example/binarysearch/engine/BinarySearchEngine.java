@@ -1,6 +1,10 @@
-package org.example.binarysearch;
+package org.example.binarysearch.engine;
+
+import java.util.Stack;
 
 public class BinarySearchEngine {
+    private Stack<State> history;
+
 
     private int[] array;
     private int target;
@@ -10,6 +14,7 @@ public class BinarySearchEngine {
     private boolean isFound;
 
     public BinarySearchEngine() {
+        history = new Stack<>();
     }
 
     public void start(int[] array, int target) {
@@ -19,6 +24,9 @@ public class BinarySearchEngine {
         this.i = 0 ;
         this.j = array.length -1;
         this.m = (i + j) / 2;
+
+        history.clear();
+        history.push(new State(i, j, m, isFound)); //speichert Startzustand
     }
 
     public boolean step() {
@@ -26,7 +34,7 @@ public class BinarySearchEngine {
             System.out.println("nichts Gefunden");
             return false;
         }
-
+        history.push(new State(i, j, m, isFound));
         if (target == array[m]){
             System.out.println("Gefunden!");
             isFound = true;
@@ -40,6 +48,21 @@ public class BinarySearchEngine {
         this.m = (i + j) / 2;
         System.out.println("Prüfe: i=" + i + " j=" + j + " m=" + m + " array[m]=" + array[m]);
 
+        return true;
+    }
+    public boolean undo() {
+        if (history.isEmpty()) {
+            System.out.println("Keine vorherigen Schritte vorhanden");
+            return false;
+        }
+
+        State vorherigerStand = history.pop();
+        this.i = vorherigerStand.i;
+        this.j = vorherigerStand.j;
+        this.m = vorherigerStand.m;
+        this.isFound = vorherigerStand.isFound;
+
+        System.out.println("Undo: i=" + i + " j=" + j + " m=" + m);
         return true;
     }
 
