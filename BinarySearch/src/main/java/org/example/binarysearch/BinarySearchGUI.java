@@ -22,11 +22,10 @@ public class BinarySearchGUI extends Application {
     private TextField targetInput;
     private Label statusLabel;
     private BorderPane root;
-    private HBox arrayBox;
     private Label[] arrowLabels;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         binarySearchEngine = new BinarySearchEngine();
         root = new BorderPane();
         root.setTop(createInputSection());
@@ -65,7 +64,7 @@ public class BinarySearchGUI extends Application {
         visualizationBox.setPadding(new Insets(20));
         visualizationBox.setAlignment(Pos.CENTER);
 
-        arrayBox = new HBox(5);
+        HBox arrayBox = new HBox(5);
         arrayBox.setAlignment(Pos.CENTER);
 
         array = formatTextToArray(arrayInput.getText().split(","));
@@ -301,9 +300,10 @@ public class BinarySearchGUI extends Application {
         invarianteInfo.setStyle("-fx-font-size: 11px; -fx-font-style: italic;");
 
         Label abbruchInfo = new Label(
-                "Abbruch:\n" +
-                        "• i > j → nicht gefunden\n" +
-                        "• array[m] == target → gefunden"
+                """
+                        Abbruch:
+                        • i > j → nicht gefunden
+                        • array[m] == target → gefunden""" // """ ist ein Textblock
         );
         abbruchInfo.setStyle("-fx-font-size: 11px;");
 
