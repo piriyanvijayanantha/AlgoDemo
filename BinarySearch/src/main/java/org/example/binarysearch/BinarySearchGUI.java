@@ -40,7 +40,7 @@ public class BinarySearchGUI extends Application {
     private HBox createInputSection() {
         HBox inputBox = new HBox(10);
         inputBox.setPadding(new Insets(15));
-        inputBox.setStyle("-fx-background-color: #f0f0f0;");
+        inputBox.setStyle("-fx-background-color: white;");
 
         Label arrayLabel = new Label("Sortiertes Array: ");
 
@@ -121,12 +121,32 @@ public class BinarySearchGUI extends Application {
     private void handleApply() {
         try {
             array = formatTextToArray(arrayInput.getText().split(","));
-            int newTarget = Integer.parseInt(targetInput.getText().trim());
+
+            //Suchwert validieren
+            String targetText = targetInput.getText().trim();
+            if (targetText.isEmpty()) {
+                throw new IllegalArgumentException("Suchwert darf nicht leer sein");
+            }
+            int newTarget = Integer.parseInt(targetText);
+
+            //Array sortiert?
+            if (!isSorted(array)) {
+                throw new IllegalArgumentException("Array muss sortiert sein!");
+            }
 
             binarySearchEngine.start(array, newTarget);
             root.setCenter(createVisualizationSection());
-        } catch (NumberFormatException ex) {
-            System.out.println("Ungültige Eingabe!");
+
+            statusLabel.setText("Array und Suchwert erfolgreich geladen");
+            statusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: green;");
+
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Suchwert muss eine ganze Zahl sein");
+            statusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: red;");
+        } catch (IllegalArgumentException e) {
+            // Fehler-Feedback (Rot)
+            statusLabel.setText("✗ " + e.getMessage());
+            statusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: red;");
         }
     }
 
@@ -139,7 +159,8 @@ public class BinarySearchGUI extends Application {
         variabelnLabel.setText(String.format("Variablen: i=%d  m=%d  j=%d",
                 binarySearchEngine.getI(),
                 binarySearchEngine.getM(),
-                binarySearchEngine.getJ()));    }
+                binarySearchEngine.getJ()));
+    }
 
     private void updateDisplay() {
         int engineM = binarySearchEngine.getM();
@@ -169,10 +190,10 @@ public class BinarySearchGUI extends Application {
         for (int i = 0; i < arrowLabels.length; i++) {
             if (i == engineI) {
                 arrowLabels[i].setText("▲ i");  // Links von Element i
-                arrowLabels[i].setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0065A4;");
+                arrowLabels[i].setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: blue;");
             } else if (i == engineJ + 1) {  // ← WICHTIG: j+1 für rechts vom Element j
                 arrowLabels[i].setText("▲ j");
-                arrowLabels[i].setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #C4071B;");
+                arrowLabels[i].setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: red;");
             } else {
                 arrowLabels[i].setText("");
             }
@@ -194,15 +215,22 @@ public class BinarySearchGUI extends Application {
         }
     }
 
-    private int[] formatTextToArray(String[] parts){
+    private int[] formatTextToArray(String[] parts) {
         int[] newArray = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
-            newArray[i] = Integer.parseInt(parts[i].trim());
+            String trimmed = parts[i].trim();
+            if (trimmed.isEmpty()) {
+                throw new IllegalArgumentException("Leeres Glied an Position: " + i);
+            }
+            if (!trimmed.matches("-?\\d+")) { //Regex:  eine oder mehrere ganze Zahlen ohne Dezimal
+                throw new IllegalArgumentException("Wert: '" + trimmed + "' auf position " + i + " ist keine ganze Zahl");
+            }
+            newArray[i] = Integer.parseInt(trimmed);
         }
         return newArray;
     }
 
-    private void buildArrayBoxes(int[] array, HBox arrayBox, VBox visualizationBox){
+    private void buildArrayBoxes(int[] array, HBox arrayBox, VBox visualizationBox) {
         for (int i = 0; i < array.length; i++) {
             VBox cell = new VBox(5);
             cell.setAlignment(Pos.CENTER);
@@ -237,5 +265,14 @@ public class BinarySearchGUI extends Application {
         }
 
         visualizationBox.getChildren().add(arrowBox);
+    }
+
+    private boolean isSorted(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
