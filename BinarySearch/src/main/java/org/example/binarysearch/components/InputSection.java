@@ -1,0 +1,96 @@
+package org.example.binarysearch.components;
+
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+
+public class InputSection extends HBox {
+    private TextField arrayInput;
+    private TextField targetInput;
+    private Label errorLabel;
+    private Runnable onApplyCallback;
+
+    //Konstruktor, Nimmt ein Array und ein Target als Input, bei knopdruck wird das Runnable ausgeführt.
+    public InputSection(Runnable onApplyCallback) {
+        this.onApplyCallback = onApplyCallback;
+        setPadding(new Insets(15));
+        setSpacing(10);
+        setStyle("-fx-background-color: white;");
+        Label arrayLabel = new Label("Sortiertes Array:");
+
+        arrayInput = new TextField();
+        arrayInput.setText("1, 3, 4, 5, 8, 11, 13");
+        arrayInput.setPrefWidth(300);
+
+        Label targetLabel = new Label("Suchwert:");
+
+        targetInput = new TextField();
+        targetInput.setText("11");
+
+        Button applyButton = new Button("Anwenden");
+        applyButton.setOnAction(e -> onApplyCallback.run());
+
+
+        errorLabel = new Label("");
+        errorLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+        errorLabel.setVisible(false);
+
+        getChildren().addAll(arrayLabel, arrayInput, targetLabel, targetInput, applyButton, errorLabel);
+    }
+
+    //Trennung des Strings in einzelstücke für ein Array
+    public int[] getArray() throws IllegalArgumentException {
+        String[] parts = arrayInput.getText().split(",");
+        return formatTextToArray(parts);
+    }
+    //Nimmt den Target Input mit Validierung
+    public int getTarget() throws IllegalArgumentException {
+        String targetText = targetInput.getText().trim();
+        if (targetText.isEmpty()) {
+            throw new IllegalArgumentException("Suchwert darf nicht leer sein");
+        }
+        try {
+            return Integer.parseInt(targetText);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Suchwert muss eine ganze Zahl sein");
+        }
+    }
+
+    public void showError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
+    }
+    public void showSuccess(String message) {
+        errorLabel.setText(message);
+        errorLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+        errorLabel.setVisible(true);
+    }
+    public void clearMessage() {
+        errorLabel.setVisible(false);
+    }
+    private int[] formatTextToArray(String[] parts) throws IllegalArgumentException {
+        int[] newArray = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            String trimmed = parts[i].trim();
+            if (trimmed.isEmpty()) {
+                throw new IllegalArgumentException("Leeres Glied an Position: " + i);
+            }
+            if (!trimmed.matches("-?\\d+")) {
+                throw new IllegalArgumentException("Wert: '" + trimmed + "' auf Position " + i + " ist keine ganze Zahl");
+            }
+            newArray[i] = Integer.parseInt(trimmed);
+        }
+        return newArray;
+    }
+    //Validiert ob das Array Sortiert ist, da Binary Search
+    public boolean isSorted(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
