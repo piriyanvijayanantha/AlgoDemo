@@ -43,18 +43,12 @@ public class BinarySearchEngine {
         }
     }
 
-    public boolean undo() {
-        if (history.isEmpty()) {
-            return false;
-        }
-
+    public void undo() {
         State vorherigerStand = history.pop();
         this.i = vorherigerStand.i;
         this.j = vorherigerStand.j;
         this.m = vorherigerStand.m;
         this.isFound = vorherigerStand.isFound;
-
-        return true;
     }
 
     public int getI() {
@@ -71,5 +65,9 @@ public class BinarySearchEngine {
 
     public boolean isFound() {
         return isFound;
+    }
+
+    public boolean isHistoryEmpty() {
+        return history.isEmpty();
     }
 }

@@ -63,7 +63,8 @@ public class BinarySearchGUI extends Application {
     }
     //letzter Schritt im Algo
     private void handleUndo() {
-        if (binarySearchEngine.undo()) {
+        if (!binarySearchEngine.isHistoryEmpty()) {
+            binarySearchEngine.undo();
             updateDisplay();
         } else {
             arrayVisualizationSection.showError("Keine vorherigen Schritte");
