@@ -4,15 +4,15 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.binarysearch.components.ArrayVisualization;
-import org.example.binarysearch.components.ControlSection;
-import org.example.binarysearch.components.InfoSection;
-import org.example.binarysearch.components.InputSection;
+import org.example.binarysearch.section.ArrayVisualizationSection;
+import org.example.binarysearch.section.ControlSection;
+import org.example.binarysearch.section.InfoSection;
+import org.example.binarysearch.section.InputSection;
 import org.example.binarysearch.engine.BinarySearchEngine;
 
 public class BinarySearchGUI extends Application {
     private BinarySearchEngine binarySearchEngine;
-    private ArrayVisualization arrayVisualization;
+    private ArrayVisualizationSection arrayVisualizationSection;
     private InputSection inputSection;
     private InfoSection infoSection;
     private ControlSection controlSection;
@@ -24,7 +24,7 @@ public class BinarySearchGUI extends Application {
         binarySearchEngine = new BinarySearchEngine();
         BorderPane root = new BorderPane();
 
-        arrayVisualization = new ArrayVisualization(currentArray);
+        arrayVisualizationSection = new ArrayVisualizationSection(currentArray);
         inputSection = new InputSection(this::handleApply);
         controlSection = new ControlSection(
                 this::handleStart,
@@ -34,7 +34,7 @@ public class BinarySearchGUI extends Application {
         infoSection = new InfoSection();
 
         root.setTop(inputSection);
-        root.setCenter(arrayVisualization);
+        root.setCenter(arrayVisualizationSection);
         root.setRight(controlSection);
         root.setLeft(infoSection);
         Scene scene = new Scene(root, 1100, 500);
@@ -66,7 +66,7 @@ public class BinarySearchGUI extends Application {
         if (binarySearchEngine.undo()) {
             updateDisplay();
         } else {
-            arrayVisualization.showError("Keine vorherigen Schritte");
+            arrayVisualizationSection.showError("Keine vorherigen Schritte");
         }
     }
     //Probiert die Inputs anzuwenden
@@ -80,8 +80,8 @@ public class BinarySearchGUI extends Application {
             }
             currentArray = array;
             binarySearchEngine.start(array, target);
-            arrayVisualization.updateArray(array);
-            arrayVisualization.updateState(binarySearchEngine.getI(), binarySearchEngine.getJ(), binarySearchEngine.getM(), binarySearchEngine.isFound());
+            arrayVisualizationSection.updateArray(array);
+            arrayVisualizationSection.updateState(binarySearchEngine.getI(), binarySearchEngine.getJ(), binarySearchEngine.getM(), binarySearchEngine.isFound());
 
             inputSection.showSuccess("Array und Suchwert erfolgreich geladen");
 
@@ -91,7 +91,7 @@ public class BinarySearchGUI extends Application {
     }
     //Aktualisiert die neuen Variabeln mit dem Display
     private void updateDisplay() {
-        arrayVisualization.updateState(
+        arrayVisualizationSection.updateState(
                 binarySearchEngine.getI(),
                 binarySearchEngine.getJ(),
                 binarySearchEngine.getM(),

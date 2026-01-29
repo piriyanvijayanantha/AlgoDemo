@@ -1,10 +1,11 @@
-package org.example.binarysearch.components;
+package org.example.binarysearch.section;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import org.example.binarysearch.section.components.StyledButton;
 
 public class InputSection extends HBox {
     private TextField arrayInput;
@@ -39,17 +40,7 @@ public class InputSection extends HBox {
                         "-fx-padding: 5;"
         );
 
-        Button applyButton = new Button("Anwenden");
-        applyButton.setStyle(
-                "-fx-background-color: #343d46;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-background-radius: 5;" +
-                        "-fx-padding: 8 20;" +
-                        "-fx-cursor: hand;"
-        );
-        applyButton.setOnAction(e -> onApplyCallback.run());
-
+        Button applyButton = new StyledButton("Anwenden", onApplyCallback, "#343d46");
 
         errorLabel = new Label("");
         errorLabel.setVisible(false);

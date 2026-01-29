@@ -1,4 +1,4 @@
-package org.example.binarysearch.components;
+package org.example.binarysearch.section;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
-public class ArrayVisualization extends VBox {
+public class ArrayVisualizationSection extends VBox {
     private Label[] arrayLabels;
     private Label[] iArrowLabels;
     private Label[] jArrowLabels;
@@ -15,7 +15,7 @@ public class ArrayVisualization extends VBox {
     private int[] array;
 
     //Konstruktor, Bestimmt die Position und Spacing von der Section
-    public ArrayVisualization(int[] array) {
+    public ArrayVisualizationSection(int[] array) {
         this.array = array;
         this.arrayLabels = new Label[array.length];
         this.iArrowLabels = new Label[array.length];
