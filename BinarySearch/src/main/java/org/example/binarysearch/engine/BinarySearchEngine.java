@@ -26,29 +26,32 @@ public class BinarySearchEngine {
         this.m = (i + j) / 2;
 
         history.clear();
-        history.push(new State(i, j, m, isFound)); //speichert Startzustand
+        history.push(new State(i, j, m, false)); //speichert Startzustand
     }
 
     public void step() {
         if (i <= j) { // Abbruchbedung i>j
             if (target == array[m]) {
                 isFound = true;
+                history.push(new State(i, j, m, true));
             } else if (target < array[m]) {
                 j = m - 1;
                 this.m = (i + j) / 2;
+                history.push(new State(i, j, m, isFound));
             } else {
                 i = m + 1;
                 this.m = (i + j) / 2;
+                history.push(new State(i, j, m, isFound));
             }
         }
     }
 
     public void undo() {
         State vorherigerStand = history.pop();
-        this.i = vorherigerStand.i;
-        this.j = vorherigerStand.j;
-        this.m = vorherigerStand.m;
-        this.isFound = vorherigerStand.isFound;
+        this.i = vorherigerStand.i();
+        this.j = vorherigerStand.j();
+        this.m = vorherigerStand.m();
+        this.isFound = vorherigerStand.isFound();
     }
 
     public int getI() {

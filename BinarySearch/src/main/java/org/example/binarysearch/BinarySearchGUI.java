@@ -76,7 +76,7 @@ public class BinarySearchGUI extends Application {
             int[] array = inputSection.getArray();
             int target = inputSection.getTarget();
 
-            if (!inputSection.isSorted(array)) {
+            if (!InputSection.isSorted(array)) {
                 throw new IllegalArgumentException("Array muss sortiert sein!");
             }
             currentArray = array;

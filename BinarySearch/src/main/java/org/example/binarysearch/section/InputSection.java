@@ -50,9 +50,16 @@ public class InputSection extends HBox {
 
     //Trennung des Strings in einzelstücke für ein Array
     public int[] getArray() throws IllegalArgumentException {
-        String[] parts = arrayInput.getText().split(",");
+        String input = arrayInput.getText().trim();
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Array-Eingabe darf nicht leer sein");
+        }
+        String[] parts = input.split(",");
+
         return formatTextToArray(parts);
     }
+
     //Nimmt den Target Input mit Validierung
     public int getTarget() throws IllegalArgumentException {
         String targetText = targetInput.getText().trim();
@@ -97,8 +104,10 @@ public class InputSection extends HBox {
     public void clearMessage() {
         errorLabel.setVisible(false);
     }
+
     private int[] formatTextToArray(String[] parts) throws IllegalArgumentException {
         int[] newArray = new int[parts.length];
+
         for (int i = 0; i < parts.length; i++) {
             String trimmed = parts[i].trim();
             if (trimmed.isEmpty()) {
@@ -112,7 +121,7 @@ public class InputSection extends HBox {
         return newArray;
     }
     //Validiert ob das Array Sortiert ist, da Binary Search
-    public boolean isSorted(int[] arr) {
+    public static boolean isSorted(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             if (arr[i] > arr[i + 1]) {
                 return false;
