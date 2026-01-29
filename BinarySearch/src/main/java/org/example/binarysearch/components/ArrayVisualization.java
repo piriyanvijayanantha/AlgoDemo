@@ -57,13 +57,21 @@ public class ArrayVisualization extends VBox {
             Label valueLabel = new Label(String.valueOf(array[i]));
             valueLabel.setMinSize(50, 50);
             valueLabel.setAlignment(Pos.CENTER);
-            valueLabel.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+            valueLabel.setStyle(
+                    "-fx-border-color: #343d46;" +
+                            "-fx-border-width: 2;" +
+                            "-fx-background-color: white;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-font-size: 14px;"
+            );
             arrayLabels[i] = valueLabel;
 
             // Index Element
             Label indexLabel = new Label("[" + i + "]");
-            indexLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: gray;");
-
+            indexLabel.setStyle(
+                    "-fx-font-size: 10px;" +
+                            "-fx-text-fill: #65737e;"
+            );
             cell.getChildren().addAll(valueLabel, indexLabel);
             arrayBox.getChildren().add(cell);
 
@@ -80,8 +88,11 @@ public class ArrayVisualization extends VBox {
     //Bildet die Variablen Anzeige unter dem Main Array
     private void buildLabels() {
         variabelnLabel = new Label("Variablen: i=?  m=?  j=?");
-        variabelnLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-
+        variabelnLabel.setStyle(
+                "-fx-font-size: 14px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-text-fill: #343d46;"
+        );
         statusLabel = new Label("");
         statusLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 

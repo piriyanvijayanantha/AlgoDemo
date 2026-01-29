@@ -21,38 +21,30 @@ public class BinarySearchEngine {
         this.isFound = false;
         this.array = array;
         this.target = target;
-        this.i = 0 ;
-        this.j = array.length -1;
+        this.i = 0;
+        this.j = array.length - 1;
         this.m = (i + j) / 2;
 
         history.clear();
         history.push(new State(i, j, m, isFound)); //speichert Startzustand
     }
 
-    public boolean step() {
-        if (i > j) {
-            System.out.println("nichts Gefunden");
-            return false;
+    public void step() {
+        if (i <= j) { // Abbruchbedung i>j
+            if (target == array[m]) {
+                isFound = true;
+            } else if (target < array[m]) {
+                j = m - 1;
+                this.m = (i + j) / 2;
+            } else {
+                i = m + 1;
+                this.m = (i + j) / 2;
+            }
         }
-        history.push(new State(i, j, m, isFound));
-        if (target == array[m]){
-            System.out.println("Gefunden!");
-            isFound = true;
-            return false;
-        }else if (target < array[m]) {
-            j = m - 1;
-        } else {
-            i = m + 1;
-        }
-
-        this.m = (i + j) / 2;
-        System.out.println("Prüfe: i=" + i + " j=" + j + " m=" + m + " array[m]=" + array[m]);
-
-        return true;
     }
+
     public boolean undo() {
         if (history.isEmpty()) {
-            System.out.println("Keine vorherigen Schritte vorhanden");
             return false;
         }
 
@@ -62,24 +54,7 @@ public class BinarySearchEngine {
         this.m = vorherigerStand.m;
         this.isFound = vorherigerStand.isFound;
 
-        System.out.println("Undo: i=" + i + " j=" + j + " m=" + m);
         return true;
-    }
-
-    public int[] getArray() {
-        return array;
-    }
-
-    public int getTarget() {
-        return target;
-    }
-
-    public void setArray(int[] array) {
-        this.array = array;
-    }
-
-    public void setTarget(int target) {
-        this.target = target;
     }
 
     public int getI() {

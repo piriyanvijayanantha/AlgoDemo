@@ -18,8 +18,6 @@ public class BinarySearchGUI extends Application {
     private ControlSection controlSection;
     private int[] currentArray = new int[]{1, 3, 4, 5, 8, 11, 13};
 
-
-
     // Startet die JavaFX Anwendung mit den 4 Sections die initialisiert werden.
     @Override
     public void start(Stage stage) {

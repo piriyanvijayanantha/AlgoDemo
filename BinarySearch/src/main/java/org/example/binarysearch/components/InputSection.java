@@ -10,31 +10,48 @@ public class InputSection extends HBox {
     private TextField arrayInput;
     private TextField targetInput;
     private Label errorLabel;
-    private Runnable onApplyCallback;
 
     //Konstruktor, Nimmt ein Array und ein Target als Input, bei knopdruck wird das Runnable ausgeführt.
     public InputSection(Runnable onApplyCallback) {
-        this.onApplyCallback = onApplyCallback;
         setPadding(new Insets(15));
         setSpacing(10);
-        setStyle("-fx-background-color: white;");
+        setStyle("-fx-background-color: #65737e;");
         Label arrayLabel = new Label("Sortiertes Array:");
+        arrayLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+
 
         arrayInput = new TextField();
         arrayInput.setText("1, 3, 4, 5, 8, 11, 13");
         arrayInput.setPrefWidth(300);
+        arrayInput.setStyle(
+                "-fx-background-radius: 5;" +
+                        "-fx-padding: 5;"
+        );
 
         Label targetLabel = new Label("Suchwert:");
+        targetLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+
 
         targetInput = new TextField();
         targetInput.setText("11");
+        targetInput.setStyle(
+                "-fx-background-radius: 5;" +
+                        "-fx-padding: 5;"
+        );
 
         Button applyButton = new Button("Anwenden");
+        applyButton.setStyle(
+                "-fx-background-color: #343d46;" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-radius: 5;" +
+                        "-fx-padding: 8 20;" +
+                        "-fx-cursor: hand;"
+        );
         applyButton.setOnAction(e -> onApplyCallback.run());
 
 
         errorLabel = new Label("");
-        errorLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
         errorLabel.setVisible(false);
 
         getChildren().addAll(arrayLabel, arrayInput, targetLabel, targetInput, applyButton, errorLabel);
@@ -60,11 +77,30 @@ public class InputSection extends HBox {
 
     public void showError(String message) {
         errorLabel.setText(message);
+        errorLabel.setStyle(
+                "-fx-text-fill: white;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-color: #C4071B;" +
+                        "-fx-padding: 8;" +
+                        "-fx-background-radius: 5;" +
+                        "-fx-border-color: #343d46;" +
+                        "-fx-border-width: 2;" +
+                        "-fx-border-radius: 5;"
+        );
         errorLabel.setVisible(true);
     }
     public void showSuccess(String message) {
         errorLabel.setText(message);
-        errorLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+        errorLabel.setStyle(
+                "-fx-text-fill: white;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-background-color: #6ba43a;" +
+                        "-fx-padding: 8;" +
+                        "-fx-background-radius: 5;" +
+                        "-fx-border-color: #343d46;" +
+                        "-fx-border-width: 2;" +
+                        "-fx-border-radius: 5;"
+        );
         errorLabel.setVisible(true);
     }
     public void clearMessage() {
