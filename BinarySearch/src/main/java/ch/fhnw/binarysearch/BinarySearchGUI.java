@@ -1,11 +1,15 @@
-package org.example.binarysearch;
+package ch.fhnw.binarysearch;
 
+import ch.fhnw.binarysearch.section.ArrayVisualizationSection;
+import ch.fhnw.binarysearch.section.ControlSection;
+import ch.fhnw.binarysearch.section.InfoSection;
+import ch.fhnw.binarysearch.section.InputSection;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.binarysearch.section.*;
-import org.example.binarysearch.engine.BinarySearchEngine;
+import ch.fhnw.binarysearch.section.*;
+import ch.fhnw.binarysearch.engine.BinarySearchEngine;
 
 public class BinarySearchGUI extends Application {
     private BinarySearchEngine binarySearchEngine;
@@ -59,7 +63,7 @@ public class BinarySearchGUI extends Application {
     }
     //letzter Schritt im Algo
     private void handleUndo() {
-        if (!binarySearchEngine.isHistoryEmpty()) {
+        if (binarySearchEngine.hasHistoryStates()) {
             binarySearchEngine.undo();
             updateDisplay();
         } else {

@@ -1,10 +1,10 @@
-package org.example.binarysearch.section;
+package ch.fhnw.binarysearch.section;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import org.example.binarysearch.section.components.StyledButton;
+import ch.fhnw.binarysearch.section.components.StyledButton;
 
 public class ControlSection extends VBox {
     //Konstruktor, bekommt die Runnables, einen Startknopf, für die Methoden in der GUI Klasse

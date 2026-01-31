@@ -1,4 +1,4 @@
-package org.example.binarysearch.section.components;
+package ch.fhnw.binarysearch.section.components;
 
 import javafx.scene.control.Button;
 

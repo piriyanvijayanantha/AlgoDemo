@@ -1,4 +1,4 @@
-package org.example.binarysearch.section;
+package ch.fhnw.binarysearch.section;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-package org.example.binarysearch.section;
+package ch.fhnw.binarysearch.section;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -6,7 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import org.example.binarysearch.section.components.StyledButton;
+import ch.fhnw.binarysearch.section.components.StyledButton;
 
 public class InputSection extends HBox {
     private TextField arrayInput;
@@ -115,12 +115,10 @@ public class InputSection extends HBox {
     }
     //Validiert ob das Array Sortiert ist, da Binary Search
     public static boolean isSorted(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            if (arr[i] > arr[i + 1]) {
-                return false;
-            }
-        }
-        return true;
+        int i = 0;
+        while (i < arr.length - 1 && arr[i] <= arr[i + 1])
+            i++;
+        return i >= arr.length - 1;
     }
 
     //Gibt das Array vom Inputfield aus, nach Validierung
