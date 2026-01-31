@@ -4,10 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.binarysearch.section.ArrayVisualizationSection;
-import org.example.binarysearch.section.ControlSection;
-import org.example.binarysearch.section.InfoSection;
-import org.example.binarysearch.section.InputSection;
+import org.example.binarysearch.section.*;
 import org.example.binarysearch.engine.BinarySearchEngine;
 
 public class BinarySearchGUI extends Application {
@@ -24,7 +21,7 @@ public class BinarySearchGUI extends Application {
         binarySearchEngine = new BinarySearchEngine();
         BorderPane root = new BorderPane();
 
-        arrayVisualizationSection = new ArrayVisualizationSection(currentArray);
+        arrayVisualizationSection = new ArrayVisualizationSection(currentArray, binarySearchEngine);
         inputSection = new InputSection(this::handleApply);
         controlSection = new ControlSection(
                 this::handleStart,
@@ -43,13 +40,12 @@ public class BinarySearchGUI extends Application {
         stage.show();
     }
 
-    //Handler - TODO: Kann man in eigene Klasse packen? Unnötig?
 
     //Action für Start Knopf, Startet die Engine
     private void handleStart() {
         try {
             int target = inputSection.getTarget();
-            binarySearchEngine.start(currentArray, target);
+            binarySearchEngine.start(currentArray, target, inputSection.getInvariante());
             updateDisplay();
             inputSection.clearMessage();
         } catch (IllegalArgumentException e) {
@@ -80,9 +76,9 @@ public class BinarySearchGUI extends Application {
                 throw new IllegalArgumentException("Array muss sortiert sein!");
             }
             currentArray = array;
-            binarySearchEngine.start(array, target);
+            binarySearchEngine.start(array, target, inputSection.getInvariante());
             arrayVisualizationSection.updateArray(array);
-            arrayVisualizationSection.updateState(binarySearchEngine.getI(), binarySearchEngine.getJ(), binarySearchEngine.getM(), binarySearchEngine.isFound());
+            updateDisplay();
 
             inputSection.showSuccess("Array und Suchwert erfolgreich geladen");
 
@@ -90,14 +86,9 @@ public class BinarySearchGUI extends Application {
             inputSection.showError(e.getMessage());
         }
     }
-    //Aktualisiert die neuen Variabeln mit dem Display
+    //Aktualisiert die neuen Variablen mit dem Display
     private void updateDisplay() {
-        arrayVisualizationSection.updateState(
-                binarySearchEngine.getI(),
-                binarySearchEngine.getJ(),
-                binarySearchEngine.getM(),
-                binarySearchEngine.isFound()
-        );
+        arrayVisualizationSection.updateState();
     }
 
 }
