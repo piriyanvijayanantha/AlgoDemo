@@ -1,8 +1,9 @@
-module org.example.binarysearch {
+module ch.fhnw.example.binarysearch {
     requires javafx.controls;
-    requires javafx.fxml;
+    requires javafx.graphics;
 
-
-    opens org.example.binarysearch to javafx.fxml;
-    exports org.example.binarysearch;
+    exports ch.fhnw.binarysearch;
+    exports ch.fhnw.binarysearch.section;
+    exports ch.fhnw.binarysearch.section.components;
+    exports ch.fhnw.binarysearch.engine;
 }
