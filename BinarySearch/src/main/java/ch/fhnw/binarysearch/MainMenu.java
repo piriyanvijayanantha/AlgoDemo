@@ -101,7 +101,7 @@ public class MainMenu extends Application {
     }
 
     private void openMergeSort(Stage mainStage) {
-        // TODO: Implementiere MergeSort
+        // TODO: MergeSort
         }
 
     public static void main(String[] args) {
