@@ -5,10 +5,14 @@ import java.util.function.IntBinaryOperator;
 import java.util.function.IntUnaryOperator;
 
 public enum InvariantType {
-    BOTH_INCLUSIVE("[i..j] (beide inklusiv)", 0, -1, (i, j) -> i <= j, (i, j) -> (i + j) / 2, m -> m + 1, m -> m - 1),
-    LEFT_INCLUSIVE("[i..j) (i inkl, j exkl)", 0, 0, (i, j) -> i < j, (i, j) -> (i + j) / 2, m -> m + 1, m -> m),
-    BOTH_EXCLUSIVE("(i..j) (beide exklusiv)", -1, 0, (i, j) -> i + 1 < j, (i, j) -> (i + j + 1) / 2, m -> m, m -> m), //Aufrunden
-    RIGHT_INCLUSIVE("(i..j] (i exkl, j inkl)", -1, -1, (i, j) -> i < j, (i, j) -> (i + j + 1) / 2, m -> m, m -> m - 1); //Aufrunden
+    BOTH_INCLUSIVE("[i..j] -> ---|i ... j|---", 0, -1,
+            (i, j) -> i <= j, (i, j) -> (i + j) / 2, m -> m + 1, m -> m - 1),
+    LEFT_INCLUSIVE("[i..j) -> ---|i ... |j---", 0, 0,
+            (i, j) -> i < j, (i, j) -> (i + j) / 2, m -> m + 1, m -> m),
+    BOTH_EXCLUSIVE("(i..j) -> ---i| ... |j---", -1, 0,
+            (i, j) -> i + 1 < j, (i, j) -> (i + j + 1) / 2, m -> m, m -> m), //Aufrunden
+    RIGHT_INCLUSIVE("(i..j] ->---i| ... j|---", -1, -1,
+            (i, j) -> i < j, (i, j) -> (i + j + 1) / 2, m -> m, m -> m - 1); //Aufrunden
 
     private final String displayName;
     private final int iGrenze;

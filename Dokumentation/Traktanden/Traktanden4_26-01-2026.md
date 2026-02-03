@@ -1,4 +1,4 @@
-# Traktanden 5 - 26. Januar 2026
+# Traktanden 4 - 26. Januar 2026
 
 Wir haben uns vor dem Feedbackmarkt noch getroffen und die Version 2 angeschaut. Der Fokus lag auf die Kompetenzen und wo der Stand von diesen ist.
 - Objektdiagramm, 
