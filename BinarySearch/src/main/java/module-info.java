@@ -1,4 +1,4 @@
-module ch.fhnw.example.binarysearch {
+module ch.fhnw.binarysearch {
     requires javafx.controls;
     requires javafx.graphics;
 
@@ -6,4 +6,5 @@ module ch.fhnw.example.binarysearch {
     exports ch.fhnw.binarysearch.section;
     exports ch.fhnw.binarysearch.section.components;
     exports ch.fhnw.binarysearch.engine;
+    exports ch.fhnw.binarysearch.section.utils;
 }
