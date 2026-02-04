@@ -1,5 +1,6 @@
-package ch.fhnw.binarysearch;
+package ch.fhnw;
 
+import ch.fhnw.binarysearch.BinarySearchGUI;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -103,9 +104,5 @@ public class MainMenu extends Application {
     private void openMergeSort(Stage mainStage) {
         // TODO: MergeSort
         }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
 

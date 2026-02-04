@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import ch.fhnw.binarysearch.section.components.StyledButton;
+import ch.fhnw.components.StyledButton;
 
 public class ControlSection extends VBox {
     //Konstruktor, bekommt die Runnables, einen Startknopf, für die Methoden in der GUI Klasse

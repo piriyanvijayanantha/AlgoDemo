@@ -1,4 +1,4 @@
-package ch.fhnw.binarysearch.section.utils;
+package ch.fhnw.utils;
 
 import java.util.Arrays;
 import java.util.Random;

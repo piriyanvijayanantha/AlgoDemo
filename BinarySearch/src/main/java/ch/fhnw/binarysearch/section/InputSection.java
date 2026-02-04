@@ -1,7 +1,7 @@
 package ch.fhnw.binarysearch.section;
 
-import ch.fhnw.binarysearch.section.components.StyledButton;
-import ch.fhnw.binarysearch.section.utils.ArrayGenerator;
+import ch.fhnw.components.StyledButton;
+import ch.fhnw.utils.ArrayGenerator;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
