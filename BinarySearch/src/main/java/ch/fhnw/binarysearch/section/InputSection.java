@@ -42,7 +42,7 @@ public class InputSection extends VBox {
         // Generate Section
         Label orLabel = new Label("oder");
 
-        generateSizeSpinner = new Spinner<>(5, 13, 7);
+        generateSizeSpinner = new Spinner<>(4, 13, 7); //ArrayGrösse: mind-4, max-13, default-7
         generateSizeSpinner.setEditable(true);
         generateSizeSpinner.setPrefWidth(70);
 
