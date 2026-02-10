@@ -9,6 +9,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.awt.*;
+
 
 public class VariablesSection extends VBox {
 
@@ -39,10 +41,10 @@ public class VariablesSection extends VBox {
         variablesBox.getChildren().add(title);
 
         // Variablen-Zeilen erstellen
-        leftValue = createVariableRow(variablesBox, "left", "-");
-        rightValue = createVariableRow(variablesBox, "right", "-");
-        midValue = createVariableRow(variablesBox, "mid", "-");
-        depthValue = createVariableRow(variablesBox, "depth", "-");
+        leftValue = createVariableRow(variablesBox, "left", "-", "#df305b");
+        midValue = createVariableRow(variablesBox, "mid", "-", "#EA8700");
+        rightValue = createVariableRow(variablesBox, "right", "-", "#0065A4");
+        depthValue = createVariableRow(variablesBox, "depth", "-", "black");
 
         // Phase-Badge
         phaseLabel = new Label("-");
@@ -122,7 +124,7 @@ public class VariablesSection extends VBox {
     }
 
     //Erstellt eine Zeile: Name (links) ... Wert (rechts, blau)
-    private Label createVariableRow(VBox parent, String name, String initialValue) {
+    private Label createVariableRow(VBox parent, String name, String initialValue, String color) {
         HBox row = new HBox(10);
         row.setAlignment(Pos.CENTER_LEFT);
         row.setStyle(
@@ -135,7 +137,7 @@ public class VariablesSection extends VBox {
 
         Label valueLabel = new Label(initialValue);
         valueLabel.setFont(Font.font("System", FontWeight.BOLD, 13));
-        valueLabel.setStyle("-fx-text-fill: #0065A4;");
+        valueLabel.setStyle("-fx-text-fill: " + color);
 
         HBox spacer = new HBox();
         HBox.setHgrow(spacer, Priority.ALWAYS);

@@ -1,5 +1,6 @@
 package ch.fhnw.mergeSort.section;
 
+import ch.fhnw.mergeSort.Engine.MergeState;
 import ch.fhnw.mergeSort.Engine.TreeNodeInfo;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -56,7 +57,7 @@ public class RecursionTreeSection extends VBox {
         getChildren().addAll(titleLabel, scrollPane);
     }
 
-    public void update(List<TreeNodeInfo> treeNodes) {
+    public void update(List<TreeNodeInfo> treeNodes, MergeState currentState){
         treePane.getChildren().clear();
         nodePositions.clear();
         nodeWidths.clear();
@@ -82,6 +83,8 @@ public class RecursionTreeSection extends VBox {
         for (TreeNodeInfo node : treeNodes) {
             drawNode(node);
         }
+        drawArrows(treeNodes, currentState);
+
     }
 
     //Rekursive Methode, die beim Start Root Node bekommt um die Breite des ganzen Baumes zu berechnen
@@ -91,22 +94,23 @@ public class RecursionTreeSection extends VBox {
         if (node.isLeaf()) {
             nodeWidths.put(key(node), nodeWidth);
             return nodeWidth;
-        }
-        TreeNodeInfo leftChild = findLeftChild(node, allNodes);
-        TreeNodeInfo rightChild = findRightChild(node, allNodes);
+        }else {
+            TreeNodeInfo leftChild = findLeftChild(node, allNodes);
+            TreeNodeInfo rightChild = findRightChild(node, allNodes);
 
-        double totalWidth;
-        if (leftChild != null && rightChild != null) {
-            double leftWidth = calculateWidths(leftChild, allNodes);
-            double rightWidth = calculateWidths(rightChild, allNodes);
-            double childrenWidth = leftWidth + GROUP_GAP + rightWidth;
-            totalWidth = Math.max(nodeWidth, childrenWidth); //nimmt den grösseren Wert der beiden Paramter
-        } else {
-            totalWidth = nodeWidth;
-        }
+            double totalWidth;
+            if (leftChild != null && rightChild != null) {
+                double leftWidth = calculateWidths(leftChild, allNodes);
+                double rightWidth = calculateWidths(rightChild, allNodes);
+                double childrenWidth = leftWidth + GROUP_GAP + rightWidth;
+                totalWidth = Math.max(nodeWidth, childrenWidth); //nimmt den grösseren Wert der beiden Paramter
+            } else {
+                totalWidth = nodeWidth;
+            }
 
-        nodeWidths.put(key(node), totalWidth);
-        return totalWidth;
+            nodeWidths.put(key(node), totalWidth);
+            return totalWidth;
+        }
     }
 
     //Rekursive Methode, die beim Start Root Node bekommt und so die Positionen der Knoten Festlegt für den ganzen Baum
@@ -119,20 +123,19 @@ public class RecursionTreeSection extends VBox {
 
         if (node.isLeaf()) {
             nodePositions.put(key(node), startX);
-            return;
-        }
+        }else {
+            TreeNodeInfo leftChild = findLeftChild(node, allNodes);
+            TreeNodeInfo rightChild = findRightChild(node, allNodes);
 
-        TreeNodeInfo leftChild = findLeftChild(node, allNodes);
-        TreeNodeInfo rightChild = findRightChild(node, allNodes);
+            if (leftChild != null && rightChild != null) {
+                double leftWidth = getWidth(leftChild);
+                double rightWidth = getWidth(rightChild);
+                double childrenWidth = leftWidth + GROUP_GAP + rightWidth;
+                double childrenStartX = startX + (totalWidth - childrenWidth) / 2;
 
-        if (leftChild != null && rightChild != null) {
-            double leftWidth = getWidth(leftChild);
-            double rightWidth = getWidth(rightChild);
-            double childrenWidth = leftWidth + GROUP_GAP + rightWidth;
-            double childrenStartX = startX + (totalWidth - childrenWidth) / 2;
-
-            assignPositions(leftChild, childrenStartX, allNodes);
-            assignPositions(rightChild, childrenStartX + leftWidth + GROUP_GAP, allNodes);
+                assignPositions(leftChild, childrenStartX, allNodes);
+                assignPositions(rightChild, childrenStartX + leftWidth + GROUP_GAP, allNodes);
+            }
         }
     }
 
@@ -166,6 +169,14 @@ public class RecursionTreeSection extends VBox {
 
                 treePane.getChildren().add(valueText);
             }
+            //Indexierung unter ArrayBoxen
+            Text indexText = new Text("[" + (node.left + i) + "]");
+            indexText.setFill(Color.web("#65737e"));
+            indexText.setFont(Font.font("System", 9));
+            double idxWidth = indexText.getLayoutBounds().getWidth();
+            indexText.setX(x + (CELL_WIDTH - idxWidth) / 2);
+            indexText.setY(y + CELL_HEIGHT + 12);
+            treePane.getChildren().add(indexText);
         }
 
         // Gruppenrahmen (gestrichelt)
@@ -213,6 +224,74 @@ public class RecursionTreeSection extends VBox {
             label.setFill(Color.web("#aaaaaa"));
             treePane.getChildren().add(label);
         }
+    }
+
+    private void drawArrows(List<TreeNodeInfo> treeNodes, MergeState state) {
+        if (state == null) return;
+        String phase = state.getPhase();
+        if (!phase.equals("DIVIDE") && !phase.equals("MERGE")) return;
+
+        TreeNodeInfo activeNode = null;
+        for (TreeNodeInfo node : treeNodes) {
+            if (node.left == state.getLeft()
+                    && node.right == state.getRight()
+                    && node.depth == state.getDepth()) {
+                activeNode = node;
+                break;
+            }
+        }
+        if (activeNode == null) return;
+
+        Double posX = nodePositions.get(key(activeNode));
+
+        double y = MARGIN_TOP + activeNode.depth * LEVEL_HEIGHT;
+        int left = state.getLeft();
+        int mid = state.getMid();
+        int right = state.getRight();
+
+        // X-Positionen berechnen (Mitte jeder Zelle)
+        double leftX = posX + (left - activeNode.left) * (CELL_WIDTH + CELL_GAP) + CELL_WIDTH / 2;
+        double midX = (mid >= 0) ? posX + (mid - activeNode.left) * (CELL_WIDTH + CELL_GAP) + CELL_WIDTH / 2 : -1;
+        double rightX = posX + (right - 1 - activeNode.left) * (CELL_WIDTH + CELL_GAP) + CELL_WIDTH / 2;
+
+        // falls zwei Pfeile zu nah sind, den mittleren höher setzen
+        double baseY = y - 5;
+        double leftY = baseY;
+        double midY = baseY;
+        double rightY = baseY;
+        // Wenn mid und left oder mid und right zu nah (< 30px), mid höher
+        if (mid >= 0) {
+            if (Math.abs(midX - leftX) < 30) midY = baseY - 18;
+            if (Math.abs(midX - rightX) < 30) midY = baseY - 18;
+        }
+        // Wenn left und right zu nah, right höher
+        if (Math.abs(rightX - leftX) < 30) rightY = baseY - 18;
+
+        drawSingleArrow(leftX, leftY, "left", "#df305b");
+        if (mid >= 0) {
+            drawSingleArrow(midX, midY, "mid", "#EA8700");
+        }
+        drawSingleArrow(rightX, rightY, "right", "#0065A4");
+    }
+
+    private void drawSingleArrow(double x, double arrowY, String label, String color) {
+        // Pfeil ▼
+        Text arrow = new Text("▼");
+        arrow.setFill(Color.web(color));
+        arrow.setFont(Font.font("System", 12));
+        double arrowWidth = arrow.getLayoutBounds().getWidth();
+        arrow.setX(x - arrowWidth / 2);
+        arrow.setY(arrowY);
+        treePane.getChildren().add(arrow);
+
+        // Label über dem Pfeil
+        Text labelText = new Text(label);
+        labelText.setFill(Color.web(color));
+        labelText.setFont(Font.font("System", 10));
+        double labelWidth = labelText.getLayoutBounds().getWidth();
+        labelText.setX(x - labelWidth / 2);
+        labelText.setY(arrowY - 11);
+        treePane.getChildren().add(labelText);
     }
 
     private TreeNodeInfo findLeftChild(TreeNodeInfo parent, List<TreeNodeInfo> all) {

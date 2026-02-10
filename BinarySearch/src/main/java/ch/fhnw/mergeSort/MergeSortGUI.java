@@ -1,6 +1,5 @@
 package ch.fhnw.mergeSort;
 
-import ch.fhnw.components.ArrayInputComponent;
 import ch.fhnw.mergeSort.Engine.MergeSortEngine;
 import ch.fhnw.mergeSort.Engine.MergeState;
 import ch.fhnw.mergeSort.Engine.TreeNodeInfo;
@@ -99,7 +98,7 @@ public class MergeSortGUI extends Application {
 
         //Rekursionsbaum
         List<TreeNodeInfo> treeState = engine.computeTreeState();
-        recursionTreeSection.update(treeState);
+        recursionTreeSection.update(treeState, currentState);
 
         // Aktions-Erklärung
         // getPreviousState() liefert den State VOR dem aktuellen (für Merge-Erklärung)

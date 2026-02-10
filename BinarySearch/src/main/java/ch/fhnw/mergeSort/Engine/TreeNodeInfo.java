@@ -23,12 +23,12 @@ public class TreeNodeInfo {
     }
 
     public int size() {
-        return right - left + 1;
+        return right - left;
     }
 
     //ist es ein Blatt? -> ein Knoten mit einer Verbindung
     public boolean isLeaf() {
-        return left == right;
+        return left - right == 1;
     }
 
     @Override

@@ -29,19 +29,19 @@ public class MergeSortEngine {
         allSteps.add(new MergeState(
                 MergeState.PHASE_START,
                 workArray,
-                0, workArray.length - 1, -1, 0, //mid = -1 (mid wird später berechnet)
+                0, workArray.length, -1, 0,
                 "Start mit Array",
                 new ArrayList<>()
         ));
 
         // MergeSort durchführen und States sammeln
-        mergeSort(workArray, 0, workArray.length - 1, 0);
+        mergeSort(workArray, 0, workArray.length, 0);
 
         // End-State mit leerem Call Stack
         allSteps.add(new MergeState(
                 MergeState.PHASE_DONE,
                 workArray,
-                0, workArray.length - 1, -1, 0,
+                0, workArray.length, -1, 0,
                 "Sortierung abgeschlossen!",
                 new ArrayList<>()
         ));
@@ -50,8 +50,8 @@ public class MergeSortEngine {
     private void mergeSort(int[] array, int left, int right, int depth) {
         // CallStack: Methodenaufruf mergeSort wird gepusht
         callStack.push(String.format("mergeSort(%d, %d)", left, right));
-
-        if (left < right) {
+        //abbruch bedingung
+        if (right - left > 1) {
             divide(array, left, right, depth);
         }
         // CallStack: Methodenaufruf ist fertig
@@ -73,17 +73,15 @@ public class MergeSortEngine {
 
         // Rekursiv links
         mergeSort(array, left, mid, depth + 1);
-
         // Rekursiv rechts
-        mergeSort(array, mid + 1, right, depth + 1);
-
+        mergeSort(array, mid, right, depth + 1);
         // Merge
         merge(array, left, mid, right, depth);
     }
 
     private void merge(int[] array, int left, int mid, int right, int depth) {
         // Temporäre Arrays erstellen
-        int[] leftPart = new int[mid - left + 1];
+        int[] leftPart = new int[mid - left];
         int[] rightPart = new int[right - mid];
         // Linke hälfte ins Temp kopieren
         for (int i = 0; i < leftPart.length; i++) {
@@ -91,7 +89,7 @@ public class MergeSortEngine {
         }
         // Rechte hälfte ins Temp kopieren
         for (int i = 0; i < rightPart.length; i++) {
-            rightPart[i] = array[mid + 1 + i];
+            rightPart[i] = array[mid + i];
         }
         // Merge-Prozess
         int i = 0;
@@ -160,7 +158,7 @@ public class MergeSortEngine {
                 case MergeState.PHASE_START:
                     // Wurzelknoten: ganzes Array sichtbar
                     nodes.add(new TreeNodeInfo(
-                            0, originalArray.length - 1, 0,
+                            0, originalArray.length, 0,
                             originalArray.clone(),
                             "INITIAL"
                     ));
@@ -198,22 +196,15 @@ public class MergeSortEngine {
         }
 
         // Linkes Kind [left..mid] hinzufügen
-        boolean leftIsLeaf = (left == mid);
+        boolean leftIsLeaf = (mid - left == 1);
         int[] leftValues = leftIsLeaf ? new int[]{arrayState[left]} : null;
-        nodes.add(new TreeNodeInfo(
-                left, mid, depth + 1,
-                leftValues,
-                leftIsLeaf ? "LEAF" : "EMPTY"
-        ));
+        nodes.add(new TreeNodeInfo(left, mid, depth + 1, leftValues, leftIsLeaf ? "LEAF" : "EMPTY"));
 
-        // Rechtes Kind [mid+1..right] hinzufügen
-        boolean rightIsLeaf = (mid + 1 == right);
-        int[] rightValues = rightIsLeaf ? new int[]{arrayState[right]} : null;
-        nodes.add(new TreeNodeInfo(
-                mid + 1, right, depth + 1,
-                rightValues,
-                rightIsLeaf ? "LEAF" : "EMPTY"
-        ));
+
+        // Rechtes Kind [mid..right] hinzufügen
+        boolean rightIsLeaf = (right - mid == 1);
+        int[] rightValues = rightIsLeaf ? new int[]{arrayState[mid]} : null;
+        nodes.add(new TreeNodeInfo(mid, right, depth + 1, rightValues, rightIsLeaf ? "LEAF" : "EMPTY"));
     }
 
     private void applyMerge(List<TreeNodeInfo> nodes, MergeState step) {
@@ -225,7 +216,7 @@ public class MergeSortEngine {
         for (TreeNodeInfo node : nodes) {
             if (node.left == left && node.right == right && node.depth == depth) {
                 // Sortierte Werte aus dem Array extrahieren
-                int[] mergedValues = new int[right - left + 1];
+                int[] mergedValues = new int[right - left];
                 System.arraycopy(arrayState, left, mergedValues, 0, mergedValues.length);
                 node.values = mergedValues;
                 node.status = "MERGED";
