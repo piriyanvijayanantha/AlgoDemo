@@ -50,6 +50,7 @@ public class BinarySearchGUI extends Application {
         binarySearchEngine.step();
         updateDisplay();
     }
+
     //letzter Schritt im Algo
     private void handleUndo() {
         if (binarySearchEngine.hasHistoryStates()) {
@@ -59,16 +60,13 @@ public class BinarySearchGUI extends Application {
             arrayVisualizationSection.showError("Keine vorherigen Schritte");
         }
     }
+
     //Probiert die Inputs anzuwenden
     private void handleApply() {
         try {
             int[] array = inputSection.getArray();
             int target = inputSection.getTarget();
             InvariantType invariant = inputSection.getInvariante();
-
-            if (!InputSection.isSorted(array)) {
-                throw new IllegalArgumentException("Array muss sortiert sein!");
-            }
 
             currentArray = array;
             arrayVisualizationSection.updateArray(array);
@@ -81,6 +79,7 @@ public class BinarySearchGUI extends Application {
             inputSection.showError(e.getMessage());
         }
     }
+
     //Aktualisiert die neuen Variablen mit dem Display
     private void updateDisplay() {
         arrayVisualizationSection.updateState();

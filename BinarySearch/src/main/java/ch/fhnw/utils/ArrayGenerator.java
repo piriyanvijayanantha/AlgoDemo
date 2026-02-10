@@ -18,4 +18,14 @@ public class ArrayGenerator {
 
         return array;
     }
+    public static int[] generateRandomArray(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Grösse muss positiv sein");
+        }
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt(21);
+        }
+        return array;
+    }
 }

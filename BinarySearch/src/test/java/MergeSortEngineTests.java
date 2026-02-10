@@ -1,14 +1,15 @@
 import ch.fhnw.mergeSort.Engine.MergeSortEngine;
 import ch.fhnw.mergeSort.Engine.MergeState;
+import ch.fhnw.mergeSort.Engine.TreeNodeInfo;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//KI Generierte Tests um Engine stets zu testen
+//Initialisierung, SchrittGenerierung, Navigation, Sortier Korrektheit und Rekursionsbaum werden Getestet.
 public class MergeSortEngineTests {
 
     private MergeSortEngine engine;
@@ -19,210 +20,244 @@ public class MergeSortEngineTests {
         engine.generateSteps();
     }
 
-    @Test
-    @DisplayName("Engine initialisiert korrekt")
-    void testInitialization() {
-        assertNotNull(engine);
-        assertNotNull(engine.getCurrentState());
-        assertEquals(1, engine.getCurrentStepNumber());
-    }
-
-    @Test
-    @DisplayName("generateSteps() erzeugt mehrere Schritte")
-    void testGenerateSteps() {
-        assertTrue(engine.getTotalSteps() > 1, "Es sollten mehrere Schritte generiert werden");
-        System.out.println("Anzahl Schritte: " + engine.getTotalSteps());
-    }
-
-    @Test
-    @DisplayName("Original Array ist korrekt")
-    void testOriginalArray() {
-        int[] expected = {5, 2, 7, 9, 6, 2, 1, 0, 8};
-        assertArrayEquals(expected, engine.getOriginalArray());
-    }
-
-    @Test
-    @DisplayName("step() erhöht Step-Number")
-    void testStep() {
-        int initialStep = engine.getCurrentStepNumber();
-        engine.step();
-        assertEquals(initialStep + 1, engine.getCurrentStepNumber());
-    }
-
-    @Test
-    @DisplayName("undo() verringert Step-Number")
-    void testUndo() {
-        // Erst vorwärts gehen
-        engine.step();
-        engine.step();
-        int stepAfterForward = engine.getCurrentStepNumber();
-
-        // Dann rückwärts
-        engine.undo();
-        assertEquals(stepAfterForward - 1, engine.getCurrentStepNumber());
-    }
-
-    @Test
-    @DisplayName("reset() setzt auf Schritt 1 zurück")
-    void testReset() {
-        // Vorwärts gehen
-        for (int i = 0; i < 5; i++) {
-            engine.step();
+    @Nested
+    class Initialisierung {
+        @Test
+        void testOriginalArray() {
+            int[] expected = {5, 2, 7, 9, 6, 2, 1, 0, 8};
+            assertArrayEquals(expected, engine.getOriginalArray());
         }
 
-        // Reset
-        engine.reset();
-        assertEquals(1, engine.getCurrentStepNumber());
-    }
-
-    @Test
-    @DisplayName("canStepForward() gibt korrekte Werte zurück")
-    void testCanStepForward() {
-        assertTrue(engine.canStepForward(), "Am Anfang sollte vorwärts möglich sein");
-
-        // Gehe bis zum Ende
-        while (engine.canStepForward()) {
-            engine.step();
+        @Test
+        void testOriginalArrayDefensiveCopy() {
+            int[] array1 = engine.getOriginalArray();
+            array1[0] = 999; // Manipulation
+            int[] array2 = engine.getOriginalArray();
+            assertEquals(5, array2[0]);
         }
 
-        assertFalse(engine.canStepForward(), "Am Ende sollte vorwärts nicht möglich sein");
-    }
-
-    @Test
-    @DisplayName("canStepBackward() gibt korrekte Werte zurück")
-    void testCanStepBackward() {
-        assertFalse(engine.canStepBackward(), "Am Anfang sollte rückwärts nicht möglich sein");
-
-        // Ein Schritt vorwärts
-        engine.step();
-
-        assertTrue(engine.canStepBackward(), "Nach vorwärts sollte rückwärts möglich sein");
-    }
-
-    @Test
-    @DisplayName("Array ist am Ende sortiert")
-    void testArrayIsSortedAtEnd() {
-        // Gehe zum Ende
-        while (engine.canStepForward()) {
-            engine.step();
+        @Test
+        void testStartsAtStepOne() {
+            assertEquals(1, engine.getCurrentStepNumber());
         }
 
-        MergeState finalState = engine.getCurrentState();
-        assertNotNull(finalState);
-
-        int[] finalArray = finalState.getArray();
-        int[] sortedArray = finalArray.clone();
-        Arrays.sort(sortedArray);
-
-        assertArrayEquals(sortedArray, finalArray, "Array sollte am Ende sortiert sein");
+        @Test
+        void testHasMultipleSteps() {
+            assertTrue(engine.getTotalSteps() > 2);
+        }
     }
 
-    @Test
-    @DisplayName("Alle States haben gültige Arrays")
-    void testAllStatesHaveValidArrays() {
-        while (engine.canStepForward()) {
+
+    @Nested
+    class SchrittGenerierung {
+
+        @Test
+        void testFirstStepIsStart() {
             MergeState state = engine.getCurrentState();
-            assertNotNull(state, "State darf nicht null sein");
-            assertNotNull(state.getArray(), "Array im State darf nicht null sein");
-            assertEquals(9, state.getArray().length, "Array sollte immer Länge 9 haben");
-            engine.step();
+            assertEquals(MergeState.PHASE_START, state.getPhase());
         }
-    }
 
-    @Test
-    @DisplayName("DIVIDE und MERGE Phasen existieren")
-    void testPhasesExist() {
-        boolean hasDivide = false;
-        boolean hasMerge = false;
-
-        while (engine.canStepForward()) {
-            MergeState state = engine.getCurrentState();
-            if ("DIVIDE".equals(state.getPhase())) {
-                hasDivide = true;
+        @Test
+        void testLastStepIsDone() {
+            // Bis zum Ende navigieren
+            while (engine.canStepForward()) {
+                engine.step();
             }
-            if ("MERGE".equals(state.getPhase())) {
-                hasMerge = true;
-            }
-            engine.step();
-        }
-
-        assertTrue(hasDivide, "Es sollte DIVIDE-Phasen geben");
-        assertTrue(hasMerge, "Es sollte MERGE-Phasen geben");
-    }
-
-    @Test
-    @DisplayName("Depth erhöht sich in Rekursion")
-    void testDepthIncreasesInRecursion() {
-        int maxDepth = 0;
-
-        while (engine.canStepForward()) {
             MergeState state = engine.getCurrentState();
-            maxDepth = Math.max(maxDepth, state.getDepth());
-            engine.step();
+            assertEquals(MergeState.PHASE_DONE, state.getPhase());
         }
 
-        assertTrue(maxDepth > 0, "Maximale Tiefe sollte größer als 0 sein");
-        System.out.println("Maximale Rekursionstiefe: " + maxDepth);
-    }
-
-    @Test
-    @DisplayName("Step über Ende hinaus hat keine Wirkung")
-    void testStepBeyondEnd() {
-        // Gehe bis zum Ende
-        while (engine.canStepForward()) {
+        @Test
+        void testSecondStepIsDivide() {
             engine.step();
+            MergeState state = engine.getCurrentState();
+            assertEquals(MergeState.PHASE_DIVIDE, state.getPhase());
         }
 
-        int stepAtEnd = engine.getCurrentStepNumber();
+        @Test
+        void testEqualDividesAndMerges() {
+            int divides = 0;
+            int merges = 0;
 
-        // Versuche noch einen Schritt
-        engine.step();
-
-        assertEquals(stepAtEnd, engine.getCurrentStepNumber(), "Step über Ende sollte keine Wirkung haben");
-    }
-
-    @Test
-    @DisplayName("Undo am Anfang hat keine Wirkung")
-    void testUndoAtStart() {
-        int initialStep = engine.getCurrentStepNumber();
-
-        // Versuche Undo am Anfang
-        engine.undo();
-
-        assertEquals(initialStep, engine.getCurrentStepNumber(), "Undo am Anfang sollte keine Wirkung haben");
-    }
-
-    @Test
-    @DisplayName("Mehrfaches Undo funktioniert korrekt")
-    void testMultipleUndo() {
-        // 5 Schritte vorwärts
-        for (int i = 0; i < 5; i++) {
-            engine.step();
+            while (true) {
+                MergeState state = engine.getCurrentState();
+                if (state.getPhase().equals(MergeState.PHASE_DIVIDE)) divides++;
+                if (state.getPhase().equals(MergeState.PHASE_MERGE)) merges++;
+                if (!engine.canStepForward()) break;
+                engine.step();
+            }
+            assertEquals(divides, merges);
         }
-        int stepAfterForward = engine.getCurrentStepNumber();
+    }
 
-        // 3 Schritte rückwärts
-        for (int i = 0; i < 3; i++) {
+    @Nested
+    class Navigation {
+
+        @Test
+        void testStepIncrements() {
+            assertEquals(1, engine.getCurrentStepNumber());
+            engine.step();
+            assertEquals(2, engine.getCurrentStepNumber());
+        }
+
+        @Test
+        void testUndoDecrements() {
+            engine.step();
+            engine.step();
+            assertEquals(3, engine.getCurrentStepNumber());
             engine.undo();
+            assertEquals(2, engine.getCurrentStepNumber());
         }
 
-        assertEquals(stepAfterForward - 3, engine.getCurrentStepNumber());
+        @Test
+        void testReset() {
+            engine.step();
+            engine.step();
+            engine.step();
+            engine.reset();
+            assertEquals(1, engine.getCurrentStepNumber());
+            assertEquals(MergeState.PHASE_START, engine.getCurrentState().getPhase());
+        }
+
+        @Test
+        void testCannotUndoPastStart() {
+            assertFalse(engine.canStepBackward());
+            engine.undo(); // Sollte nichts tun
+            assertEquals(1, engine.getCurrentStepNumber());
+        }
+
+        @Test
+        void testCannotStepPastEnd() {
+            while (engine.canStepForward()) {
+                engine.step();
+            }
+            int lastStep = engine.getCurrentStepNumber();
+            engine.step(); // Sollte nichts tun
+            assertEquals(lastStep, engine.getCurrentStepNumber());
+        }
+
+        @Test
+        void testCanStepForwardAtStart() {
+            assertTrue(engine.canStepForward());
+        }
+
+        @Test
+        void testCannotStepBackwardAtStart() {
+            assertFalse(engine.canStepBackward());
+        }
+
+        @Test
+        void testPreviousStateAtStart() {
+            assertNull(engine.getPreviousState());
+        }
+
+        @Test
+        void testPreviousState() {
+            MergeState first = engine.getCurrentState();
+            engine.step();
+            MergeState prev = engine.getPreviousState();
+            assertEquals(first.getPhase(), prev.getPhase());
+        }
     }
 
-    @Test
-    @DisplayName("Step und Undo können kombiniert werden")
-    void testStepAndUndoCombination() {
-        // Vorwärts
-        engine.step();
-        engine.step();
+    @Nested
+    class SortierKorrektheit {
 
-        // Rückwärts
-        engine.undo();
+        @Test
+        void testArrayIsSortedAtEnd() {
+            while (engine.canStepForward()) {
+                engine.step();
+            }
+            int[] result = engine.getCurrentState().getArray();
+            int[] expected = {0, 1, 2, 2, 5, 6, 7, 8, 9};
+            assertArrayEquals(expected, result);
+        }
 
-        // Wieder vorwärts
-        engine.step();
-        engine.step();
+        @Test
+        void testSameElements() {
+            int[] original = engine.getOriginalArray().clone();
+            java.util.Arrays.sort(original);
 
-        assertEquals(4, engine.getCurrentStepNumber());
+            while (engine.canStepForward()) {
+                engine.step();
+            }
+            int[] result = engine.getCurrentState().getArray();
+
+            assertArrayEquals(original, result);
+        }
+    }
+
+    @Nested
+    class Rekursionsbaum {
+
+        @Test
+        void testTreeAtStart() {
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            assertEquals(1, tree.size());
+        }
+
+        @Test
+        void testRootDepthIsZero() {
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            assertEquals(0, tree.getFirst().depth);
+        }
+
+        @Test
+        void testRootHasAllValues() {
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            TreeNodeInfo root = tree.getFirst();
+            assertArrayEquals(engine.getOriginalArray(), root.values);
+        }
+
+        @Test
+        void testRootStatusIsInitial() {
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            assertEquals("INITIAL", tree.getFirst().status);
+        }
+
+        @Test
+        void testTreeAfterFirstDivide() {
+            engine.step(); // DIVIDE
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            assertEquals(3, tree.size());
+        }
+
+        @Test
+        void testRootStatusAfterDivide() {
+            engine.step();
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            // Wurzel ist aktiv geteilt
+            assertEquals("ACTIVE_DIVIDE", tree.getFirst().status);
+        }
+
+        @Test
+        void testChildrenDepthAfterDivide() {
+            engine.step();
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            assertEquals(1, tree.get(1).depth);
+            assertEquals(1, tree.get(2).depth);
+        }
+
+        @Test
+        void testIsLeaf() {
+            // Bis alle Blätter sichtbar sind (letzter Divide)
+            while (engine.canStepForward()) {
+                engine.step();
+            }
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            for (TreeNodeInfo node : tree) {
+                if (node.left == node.right) {
+                    assertTrue(node.isLeaf());
+                    assertEquals(1, node.size());
+                }
+            }
+        }
+
+        @Test
+        void testNodeSize() {
+            List<TreeNodeInfo> tree = engine.computeTreeState();
+            TreeNodeInfo root = tree.getFirst();
+            assertEquals(9, root.size());
+        }
     }
 }

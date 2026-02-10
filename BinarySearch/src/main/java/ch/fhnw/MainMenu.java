@@ -1,6 +1,7 @@
 package ch.fhnw;
 
 import ch.fhnw.binarysearch.BinarySearchGUI;
+import ch.fhnw.mergeSort.MergeSortGUI;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,7 +39,6 @@ public class MainMenu extends Application {
                 "#6ba43a"
         );
         mergeSortBtn.setOnAction(e -> openMergeSort(stage));
-        mergeSortBtn.setDisable(true); // Noch nicht implementiert
 
         root.getChildren().addAll(title, binarySearchBtn, mergeSortBtn);
 
@@ -102,7 +102,14 @@ public class MainMenu extends Application {
     }
 
     private void openMergeSort(Stage mainStage) {
-        // TODO: MergeSort
+        try {
+            MergeSortGUI mergeSortGUI = new MergeSortGUI();
+            Stage mergeSortStage = new Stage();
+            mergeSortGUI.start(mergeSortStage);
+            mainStage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 }
 

@@ -1,7 +1,7 @@
 package ch.fhnw.binarysearch.section;
 
+import ch.fhnw.components.ArrayInputComponent;
 import ch.fhnw.components.StyledButton;
-import ch.fhnw.utils.ArrayGenerator;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class InputSection extends VBox {
+    private ArrayInputComponent arrayInput;
     private TextField arrayInputField;
     private TextField targetField;
     private ComboBox<InvariantType> invariantChoice;
@@ -24,37 +25,8 @@ public class InputSection extends VBox {
         setSpacing(12);
         setStyle("-fx-background-color: #f5f5f5; -fx-border-color: #343d46; -fx-border-width: 0 0 2 0;");
 
-        HBox arrayRow = new HBox(10);
-        arrayRow.setAlignment(Pos.CENTER);
-
-        Label arrayLabel = new Label("Sortiertes Array:");
-
-        arrayInputField = new TextField("1, 3, 5, 7, 9, 11, 13");
-        arrayInputField.setPrefWidth(350);
-        arrayInputField.setStyle(
-                "-fx-font-size: 13px; " +
-                        "-fx-padding: 6; " +
-                        "-fx-border-color: #65737e; " +
-                        "-fx-border-radius: 4; " +
-                        "-fx-background-radius: 4;"
-        );
-
-        // Generate Section
-        Label orLabel = new Label("oder");
-
-        generateSizeSpinner = new Spinner<>(4, 13, 7); //ArrayGrösse: mind-4, max-13, default-7
-        generateSizeSpinner.setEditable(true);
-        generateSizeSpinner.setPrefWidth(70);
-
-        StyledButton generateBtn = new StyledButton("Generieren", this::handleGenerate, "#6ba43a");
-
-        arrayRow.getChildren().addAll(
-                arrayLabel,
-                arrayInputField,
-                orLabel,
-                generateSizeSpinner,
-                generateBtn
-        );
+        arrayInput = new ArrayInputComponent(true, "1, 3, 5, 7, 9, 11, 13");
+        HBox arrayRow = arrayInput.getInputRow();
 
         // Zweite Zeile: Target + Invariante + Apply
         HBox controlRow = new HBox(20);
@@ -109,22 +81,6 @@ public class InputSection extends VBox {
         getChildren().addAll(arrayRow, controlRow, messageLabel);
     }
 
-    private void handleGenerate() {
-        int size = generateSizeSpinner.getValue();
-        int[] generated = ArrayGenerator.generateSortedArray(size);
-
-        //  ins Array Feld schreiben
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < generated.length; i++) {
-            sb.append(generated[i]);
-            if (i < generated.length - 1) {
-                sb.append(", ");
-            }
-        }
-        arrayInputField.setText(sb.toString());
-        clearMessage();
-    }
-
     private void handleApply() {
         try {
             if (onApply != null) {
@@ -135,34 +91,6 @@ public class InputSection extends VBox {
         }
     }
 
-    public int[] getArray() throws IllegalArgumentException {
-        String input = arrayInputField.getText().trim();
-
-        if (input.isEmpty()) {
-            throw new IllegalArgumentException("Array-Eingabe darf nicht leer sein");
-        }
-
-        String[] parts = input.split(",");
-        int[] array = new int[parts.length];
-
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i].trim();
-            if (part.isEmpty()) {
-                throw new IllegalArgumentException("Leeres Element an Position: " + i);
-            }
-            try {
-                array[i] = Integer.parseInt(part);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Ungültige Zahl an Position " + i + ": " + part);
-            }
-        }
-
-        if (!isSorted(array)) {
-            throw new IllegalArgumentException("Array muss sortiert sein!");
-        }
-
-        return array;
-    }
 
     public int getTarget() throws IllegalArgumentException {
         String targetText = targetField.getText().trim();
@@ -189,17 +117,8 @@ public class InputSection extends VBox {
         messageLabel.setText(message);
         messageLabel.setStyle("-fx-text-fill: #6ba43a; -fx-font-weight: bold; -fx-font-size: 11px;");
     }
-
-    public void clearMessage() {
-        messageLabel.setText("");
+    public int[] getArray() throws IllegalArgumentException {
+        return arrayInput.getArray();
     }
 
-    public static boolean isSorted(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            if (arr[i] > arr[i + 1]) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
