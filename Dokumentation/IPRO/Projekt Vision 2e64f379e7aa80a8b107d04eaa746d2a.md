@@ -37,7 +37,7 @@ Umsetzung in ICT-Ressourcen
 - Entwerfen eines Tests, mit dem wesentliche Interaktionsprobleme identifiziert
 werden können.
     
-    *Szenarien entwerfen, um zu prüfen, ob die Bedienung intuitiv ist – etwa: Können Nutzer ohne Anleitung einzelne Schritte ausführen? Sind Fehlermeldungen hilfreich?*
+    *Szenarien entwerfen, um zu prüfen, ob die Bedienung intuitiv ist, Können Nutzer ohne Anleitung einzelne Schritte ausführen? Sind Fehlermeldungen hilfreich?*
     
 
 **Umsetzung:**
