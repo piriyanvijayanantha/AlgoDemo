@@ -32,4 +32,4 @@
 
 ---
 
-[Interview mit Levi Schnyder und Marc Stalder](Interview-Leitfaden%20Algorithmen-Demonstrator%20(Vorl/Interview%20mit%20Levi%20Schnyder%20und%20Marc%20Stalder%202ec4f379e7aa80bebf46ff9bcafb8447.md)
+[Interview mit Levi Schnyder und Marc Stalder](Interview-Leitfaden_Algorithmen-Demonstrator/Interview_mit_LeviSchnyder_MarcStalder.md)
