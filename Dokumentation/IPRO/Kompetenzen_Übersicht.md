@@ -52,4 +52,4 @@ Akzeptanzkriterien
 
 - (Automatisierte) Komponententests erstellen und durchführen
     
-    *Für die MergeSortEngine wurden etwa 28 Tests geschrieben die Initialisierung, SchrittGenerierung, Navigation, Sortier Korrektheit und Rekursionsbaum durchtesten.* [Unit-Test](/BinarySearch/src/test/java/MergeSortEngineTests.java)
+    *Für die MergeSortEngine wurden 28 Tests geschrieben die Initialisierung, SchrittGenerierung, Navigation, Sortier Korrektheit und Rekursionsbaum durchtesten.* [Unit-Test](/BinarySearch/src/test/java/MergeSortEngineTests.java)

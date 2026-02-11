@@ -252,7 +252,7 @@ public class RecursionTreeSection extends VBox {
         // X-Positionen berechnen (Mitte jeder Zelle)
         double leftX = posX + (left - activeNode.left) * (CELL_WIDTH + CELL_GAP) + CELL_WIDTH / 2;
         double midX = (mid >= 0) ? posX + (mid - activeNode.left) * (CELL_WIDTH + CELL_GAP) + CELL_WIDTH / 2 : -1;
-        double rightX = posX + (right - 1 - activeNode.left) * (CELL_WIDTH + CELL_GAP) + CELL_WIDTH / 2;
+        double rightX = posX + (right - activeNode.left) * (CELL_WIDTH + CELL_GAP) - CELL_GAP / 2;
 
         // falls zwei Pfeile zu nah sind, den mittleren höher setzen
         double baseY = y - 5;

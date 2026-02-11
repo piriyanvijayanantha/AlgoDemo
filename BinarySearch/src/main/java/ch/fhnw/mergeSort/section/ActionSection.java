@@ -88,17 +88,17 @@ public class ActionSection extends VBox {
         int[] array = state.getArray();
 
         descriptionLabel.setText(String.format(
-                "Teile den Bereich [%d..%d] in der Mitte (Index %d) in zwei Hälften.",
+                "Teile den Bereich [%d..%d) in der Mitte (Index %d) in zwei Hälften.",
                 left, right, mid
         ));
 
         // Linke Hälfte
-        int[] leftPart = Arrays.copyOfRange(array, left, mid + 1);
-        addArrayDisplay(String.format("Links [%d..%d]:", left, mid), leftPart, "#df305b");// Fehlerrot
+        int[] leftPart = Arrays.copyOfRange(array, left, mid);
+        addArrayDisplay(String.format("Links [%d..%d):", left, mid), leftPart, "#df305b");
 
         // Rechte Hälfte
-        int[] rightPart = Arrays.copyOfRange(array, mid + 1, right + 1);
-        addArrayDisplay(String.format("Rechts [%d..%d]:", mid + 1, right), rightPart, "#df305b");// Fehlerrot
+        int[] rightPart = Arrays.copyOfRange(array, mid, right);
+        addArrayDisplay(String.format("Rechts [%d..%d):", mid, right), rightPart, "#df305b");
     }
 
     private void showMergeExplanation(MergeState state, MergeState prevState) {
@@ -113,8 +113,8 @@ public class ActionSection extends VBox {
         // Werte VOR dem Merge (aus prevState oder aus Description)
         if (prevState != null) {
             int[] prevArray = prevState.getArray();
-            int[] leftBefore = Arrays.copyOfRange(prevArray, left, mid + 1);
-            int[] rightBefore = Arrays.copyOfRange(prevArray, mid + 1, right + 1);
+            int[] leftBefore = Arrays.copyOfRange(prevArray, left, mid);
+            int[] rightBefore = Arrays.copyOfRange(prevArray, mid, right);
 
             addArrayDisplay("Linke Hälfte:", leftBefore, "#df305b");// Fehlerrot
             addArrayDisplay("Rechte Hälfte:", rightBefore, "#df305b");// Fehlerrot
@@ -127,7 +127,7 @@ public class ActionSection extends VBox {
         detailContainer.getChildren().add(arrow);
 
         // Ergebnis NACH dem Merge
-        int[] mergedResult = Arrays.copyOfRange(state.getArray(), left, right + 1);
+        int[] mergedResult = Arrays.copyOfRange(state.getArray(), left, right);
         addArrayDisplay("Ergebnis:", mergedResult, "#0065A4");// FHNW Blau
     }
 
