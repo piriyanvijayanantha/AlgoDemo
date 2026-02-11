@@ -38,7 +38,7 @@ Visuelle Darstellung*
     
 2. **Würdest du so ein Tool nutzen?***(Wann? Wie? In welcher Situation?)*
     
-    zum ersten mal verstehen kann es gut helfen. später eher unbrauchbar. Tool gut für grundverständnsi
+    zum ersten mal verstehen kann es gut helfen. später eher unbrauchbar. Tool gut für grundverständnis
     
 3. **Noch Ideen oder Wünschen**
     

@@ -14,7 +14,7 @@ Consolen UI mit Binary Search → JavaFX Gui → Interviews mit Studenten und Do
 
 - Das MockUP Frame erstellen
 
-![image.png](Version1%20(Skateboard)%20-%20bis%2019%2001/image.png)
+![image.png](Version1_(Skateboard)/image.png)
 
 ### Interviews mit Studenenten/Dozent
 

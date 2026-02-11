@@ -17,7 +17,7 @@ Ziele
 
 ## BinarySearch - Random Zahlen generieren können
 
-![image.png](Version4%20-%20Car/image.png)
+![image.png](Version4-Car/image.png)
 
 Zuerst wollte ich ein kombiniertes InputLabel für Array machen, welches aber während der Umsetzung komisch aussah und auch nicht so benutzerfreundlich. Danach fing ich neu an und dieses mal entschied ich mich ein seperates generate Feld zu machen, dass in das ArrayLabel reinschreiben kann. So kann ich immernoch manuell alles machen und habe zusätzlich die Option per Spinner eine anzahl Array einzugeben. Die grösste Hürde war wie ich es mit dem Layout machen würde. Die umsetzung mit Random Zahlen war ziemlich einfach. Aber dieses Benutzerfreundlich zu machen hat doch mehr Aufwand gekostet. Jetzt müsste man das beim User zum Test geben und schauen ob es intuitiv ist. 
 
@@ -25,7 +25,7 @@ Zuerst wollte ich ein kombiniertes InputLabel für Array machen, welches aber w�
 
 Im Gespräch mit Wolfgang kam auf, dass die Begrifflichkeiten Inklusiv und Exklusiv falsch interpretiert werden können. 
 
-![image.png](Version4%20-%20Car/image%201.png)
+![image.png](Version4-Car/image1.png)
 
 Es wurde mit dieser einfachen Grafik ersetzt, mit der Klar ersichtlich ist ob i und j vor oder nach der Grenze vorkommen.
 
@@ -104,27 +104,27 @@ Ich musste mir überlegen, wie ich jeden einzelnen Schritt mache. Bei Binary Sea
 
 Ich habe mir ein paar Konzept überlegt für die Umsetzung. Am Ende war mir Wichtig, dass ich auch den Lernerfolg in den Vordergrund stelle und nicht nur die Machbarkeit der Visualisierung. Unten sieht man die Einzelnen Konzepte:
 
-![image.png](Version4%20-%20Car/image%202.png)
+![image.png](Version4-Car/image2.png)
 
-![image.png](Version4%20-%20Car/image%203.png)
+![image.png](Version4-Car/image3.png)
 
-![image.png](Version4%20-%20Car/image%204.png)
+![image.png](Version4-Car/image4.png)
 
 Ich habe mich am Ende dazu entschieden einen Baum zu zeichnen als Visualisierung, der am Anfang bei der visualisierung noch keine Zahlen beinhaltet, da dass keine Rolle spielt für die Teilung. Beim Merge werden dann die Zahlen eingeblendet und man s
 
 Ich habe die Konzepte einem Studenten gezeigt, der Prog1 besucht hatte und somit den MergeSort schon kennt. Das Interview dazu ist hier verlinkt: 
 
-[Identifizieren von Endbenutzerbedürfnissen für MergeSort](Version4%20-%20Car/Identifizieren%20von%20Endbenutzerbed%C3%BCrfnissen%20f%C3%BCr%20Mer%202fe4f379e7aa8034841bc8b2e55c1ee9.md)
+[Identifizieren von Endbenutzerbedürfnissen für MergeSort](Version4-Car/IdentifizierenvonEndbenutzerbedürfnissen.md)
 
 Nach diesem Interview konnte ich das Feedback noch mit einbauen und ein finales Mockup zeichnen:
 
-![image.png](Version4%20-%20Car/image%205.png)
+![image.png](Version4-Car/image5.png)
 
 ### Umsetzung mit JavaFX
 
 Ich habe mal grob probiert das Layout umzusetzen. Zum Teil habe ich farben und Styles der Einzelnen Elemente KI Generiert um die CSS arbeit zu ersparen.
 
-![image.png](Version4%20-%20Car/image%206.png)
+![image.png](Version4-Car/image6.png)
 
 Ich konnte auch Elemente wie die Buttons aus dem BinarySearch recyceln. Ausserdem habe ich auch den Aufbau genau gleich gemacht mit einer GUI Klasse und einzelnen Sections.
 
@@ -228,7 +228,7 @@ Für die Farben habe ich mich hier auf die FHNW Farbpallette bezogen:
 
 Ich habe die TreeNodeInfo.java Klasse mit einem Status Attribut vergrössert, um die Farben je nach Status zu verteilen.
 
-![image.png](Version4%20-%20Car/image%207.png)
+![image.png](Version4-Car/image7.png)
 
 ## Action Box bauen
 
@@ -245,4 +245,4 @@ Ich habe während diesen Tagen und immerwieder paar JUnit Tests geschrieben und 
 
 ## Resultat Version4
 
-![image.png](Version4%20-%20Car/image%208.png)
+![image.png](Version4-Car/image8.png)

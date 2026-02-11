@@ -2,7 +2,7 @@
 
 Als erstes habe ich am Vormittag vom MockUp eine darstellung nach JavaFX gebaut. Diese hat zum jetztigen Zeitpunkt noch keine Integration mit der Binary Search Engine. Aber das kommt jetzt am Nachmittag
 
-![2026-01-14_13-35-24.png](Woche%201%20-%20Skateboard%20Journal/2026-01-14_13-35-24.png)
+![2026-01-14_13-35-24.png](Version1-SkateboardJournal/2026-01-14_13-35-24.png)
 
 Ich habe mich fürs Skateboard dazu entschieden die Array Länge auf einer festen Grösse zu belassen, um für den Prototyp so Zeit zu sparen. NOTIZ: Ich habe es am Ende doch noch richtig gemacht. 
 
@@ -18,7 +18,7 @@ Da das anfärben von Blöcken nicht ganz sinn ergibt, da i und j grenzen sind un
 
 ### Resultat (skateboard)
 
-![image.png](Woche%201%20-%20Skateboard%20Journal/image.png)
+![image.png](Version1-SkateboardJournal/image.png)
 
 ### Feedbackmarkt
 

@@ -2,7 +2,7 @@
 
 ## Ziele (Velo) - bis 27.01
 
-### [Undo Step hinzufügen](Version2%20-%20Velo%202ee4f379e7aa8097a3b1da2ec8e3e695.md)
+### [Undo Step hinzufügen]()
 
 Mit einem Button klick sollte man einen Schritt im Algorithmus zurück gehen können.
 
@@ -30,15 +30,15 @@ Danach habe ich mir eine Lösung zur State Speicherung überlegt. Da ich den Alg
 
 https://www.geeksforgeeks.org/java/stack-class-in-java/
 
-![image.png](Version2%20-%20Velo/image.png)
+![image.png](Version2-Velo/image.png)
 
 Danach ging es zur verdeutlichung von der Invariante. Dazu habe ich ein Info Tab Hinzugefügt.
 
-![image.png](Version2%20-%20Velo/image%201.png)
+![image.png](Version2-Velo/image1.png)
 
 Dieser kann dem User zum verständnis dienen. Ausserdem habe ich den i-Pfeil über dem Array getan, so dass sich i und j nicht mehr im Weg sind. 
 
-![image.png](Version2%20-%20Velo/image%202.png)
+![image.png](Version2-Velo/image2.png)
 
 Als nächstes musste ich mich für entweder UX verbessern oder die Code Architektur verbessern entscheiden. Ich entschied mich für die Code Architektur, da es nachhaltiger zum programmieren ist, das was später kommt. Ich habe mir Inspiration aus Trick17 geholt. Aktuell habe ich das ganze GUI in einer Klasse. Ich wollte ein Pattern folgen, mit dem die einzeölnen Panels in components reintun, so könnte man sie auch wiederverwenden für zb einen weiter Algorithmus wie der Merge Sort. 
 //UPDATE
@@ -56,7 +56,7 @@ Eine Frage die sich rausstellte war, ob man das Anfang array hardcodieren sollte
 
 ## Resultat
 
-![image.png](Version2%20-%20Velo/image%203.png)
+![image.png](Version2-Velo/image3.png)
 
 ### Feedbackmarkt
 

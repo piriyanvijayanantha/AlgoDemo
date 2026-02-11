@@ -1,6 +1,6 @@
 # User-Test: MergeSort Demonstrator
 
-Teilnehmer
+Teilnehmer: Tomas Ferreira (noch nicht Prog1 besucht)
 
 # Anleitung
 
@@ -13,12 +13,12 @@ Beantworte die Fragen indem du das Tool benutzt. Schreibe deine Antworten direkt
 
 **Frage 1:** Du siehst den Startbildschirm. Wie viele Elemente hat das Array?
 
-> Antwort: ___9__ (Erwartet: 9)
+> Antwort: __9__ (Erwartet: 9)
 > 
 
 **Frage 2:** Welche Tiefe hat ist es Rekursionsbaum?
 
-> Antwort: __0___ (Erwartet: 0)
+> Antwort: __0__ (Erwartet: 0)
 > 
 
 ---
@@ -57,7 +57,7 @@ Klicke weiter bis ein Merge passiert (Knoten wird blau).
 
 **Frage 7:** Welche zwei Werte wurden zusammengeführt und was ist das Ergebnis?
 
-> Antwort: **2** + _5____ → [2, 5] (Erwartet: 2 + 5 → [2, 5])
+> Antwort: **2** + __5__ → **[2, 5]** (Erwartet: 2 + 5 → [2, 5])
 > 
 
 ## Teil 4: Navigation
@@ -94,7 +94,7 @@ Gib das Array `3, 1, 4, 2` ein und klicke "Anwenden".
 
 **Frage 13:** Erkläre in einem Satz was "Divide" bedeutet.
 
-> Antwort: **Eint devide teilt das array und es wird so lang gemacht bis es ein element hat**
+> Antwort: **Ein devide teilt das array und es wird so lang gemacht bis es ein element hat**
 > 
 
 **Frage 14:** Erkläre in einem Satz was "Merge" bedeutet.
@@ -108,8 +108,9 @@ Gib das Array `3, 1, 4, 2` ein und klicke "Anwenden".
 Verwirrend: **Ich habe lange gebraucht bis ich die Schrittanzeige gesehen habe, Mid habe ich nicht ganz verstanden**
 > 
 
-Bug gefunden:
+## Bug gefunden:
+Es wird eine Zahl zuviel angezeigt beim Ergebnis
 
-![image.png](User-Test%20MergeSort%20Demonstrator/image.png)
+![image.png](User-Test_MergeSort_Demonstrator/image.png)
 
-![image.png](User-Test%20MergeSort%20Demonstrator/image%201.png)
+![image.png](User-Test_MergeSort_Demonstrator/image1.png)

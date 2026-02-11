@@ -9,9 +9,9 @@ Umsetzung in ICT-Ressourcen
     
     [Interview mit Levi Schnyder und Marc Stalder](Interview-Leitfaden%20Algorithmen-Demonstrator%20(Vorl/Interview%20mit%20Levi%20Schnyder%20und%20Marc%20Stalder%202ec4f379e7aa80bebf46ff9bcafb8447.md)
     
-    [Identifizieren von Endbenutzerbedürfnissen für MergeSort](Version4%20-%20Car/Identifizieren%20von%20Endbenutzerbed%C3%BCrfnissen%20f%C3%BCr%20Mer%202fe4f379e7aa8034841bc8b2e55c1ee9.md)
+    [Identifizieren von Endbenutzerbedürfnissen für MergeSort](Version4-Car/IdentifizierenvonEndbenutzerbedürfnissen.md)
     
-    Alle Traktanden mit Wolfgang Weck → Word Dokument
+    [Alle Traktanden mit Wolfgang Weck](Traktanden.md)
     
 
 **Design**:
@@ -21,7 +21,7 @@ werden können. **Grundprinzipien**
     
     *Szenarien entwerfen, um zu prüfen, ob die Bedienung intuitiv ist, Können Nutzer ohne Anleitung einzelne Schritte ausführen? Sind Fehlermeldungen hilfreich?*
     
-    - Am Feedbackmarkt konnten Personen die Interaktionen testen in dem sie intuitiv ohne Anleitung die Schritte ausgeführt haben. Dabei sind immerwieder neue Dinge aufgekommen. (In den Word Dokumenten unter Feedbackmarkt Resultat dokumentiert)
+    - Am Feedbackmarkt konnten Personen die Interaktionen testen in dem sie intuitiv ohne Anleitung die Schritte ausgeführt haben. Dabei sind immerwieder neue Dinge aufgekommen. (In den Wochenjournalen unter Feedbackmarkt Resultat)
 
 **Umsetzung:**
 
@@ -52,4 +52,4 @@ Akzeptanzkriterien
 
 - (Automatisierte) Komponententests erstellen und durchführen
     
-    *Für die MergeSortEngine wurden etwa 28 Tests geschrieben die Initialisierung, SchrittGenerierung, Navigation, Sortier Korrektheit und Rekursionsbaum durchtesten.*
+    *Für die MergeSortEngine wurden etwa 28 Tests geschrieben die Initialisierung, SchrittGenerierung, Navigation, Sortier Korrektheit und Rekursionsbaum durchtesten.* [Unit-Test](/BinarySearch/src/test/java/MergeSortEngineTests.java)
