@@ -97,17 +97,11 @@ Shared
 
 ```bash
 cd BinarySearch
-mvn clean package
-java -jar target/BinarySearch-1.0-SNAPSHOT.jar
-```
-
-Mit dem Maven Wrapper (kein globales Maven nötig):
-
-```bash
-cd BinarySearch
 ./mvnw clean package
-java -jar target/BinarySearch-1.0-SNAPSHOT.jar
+java -jar target/AlgoDemo.jar
 ```
+
+Die JAR enthält alle Plattform-Natives (Windows, macOS Intel/Apple Silicon, Linux) — kein separates JavaFX nötig.
 
 ---
 
