@@ -1,12 +1,12 @@
-# Algorithmen-Demonstrator
+# AlgorithmenDemonstrator
 
-Interaktives JavaFX-Tool zur schrittweisen Visualisierung von Algorithmen, entwickelt als induviduelles Softwareprojekt an der FHNW Hochschule für Informatik für Studierende des Moduls Programmieren 1.
+Interaktives JavaFX Tool zur schrittweisen Visualisierung von Algorithmen, entwickelt als individuelles Softwareprojekt an der FHNW Hochschule für Informatik für Studierende des Moduls Programmieren 1.
 
 ---
 
 ## Übersicht
 
-Der Algorithmen-Demonstrator ermöglicht es, zwei klassische Algorithmen der Prog1-Vorlesung Schritt für Schritt
+Der Algorithmen Demonstrator ermöglicht es, zwei klassische Algorithmen der Prog1-Vorlesung Schritt für Schritt
 nachzuvollziehen. Jeder Schritt kann vorwärts und rückwärts navigiert werden. Eigene Eingaben sind jederzeit möglich.
 
 ---
@@ -28,15 +28,15 @@ Visualisiert die binäre Suche auf einem sortierten Array mit Zeigern für `i`, 
 | `(i..j)` | beide exklusiv | `i+1 < j` |
 | `(i..j]` | rechts inklusiv | `i < j` |
 
-Die Engine berechnet je nach Invariante die korrekten Startwerte, die Mittelpunkt-Berechnung (auf- oder abrunden) und die Grenzen-Updates automatisch.
+Die Engine berechnet je nach Invariante die korrekten Startwerte, die Mittelpunktberechnung (auf- oder abrunden) und die Grenz-Updates automatisch.
 
 **Features:**
 - Farbige Array-Boxen zeigen den aktuellen Suchbereich
 - Pfeile markieren `i`, `m`, `j` mit Indexbeschriftung
 - Info-Panel erklärt die gewählte Invariante
-- Manuelle Array-Eingabe oder Zufalls-Generierung
+- Manuelle Array-Eingabe oder Zufalls Generierung
 - Suchwert und Invariante frei wählbar
-- Step / Undo Navigation via Stack-basierter History
+- Step / Undo Navigation via Stack basierte History
 
 ---
 
@@ -44,7 +44,7 @@ Die Engine berechnet je nach Invariante die korrekten Startwerte, die Mittelpunk
 
 ![MergeSort Screenshot](dokumentation/images/MergeSortScreenshot.png)
 
-Visualisiert den rekursiven MergeSort-Algorithmus mit wachsendem Rekursionsbaum.
+Visualisiert den rekursiven MergeSort Algorithmus mit wachsendem Rekursionsbaum.
 
 **Features:**
 - **Rekursionsbaum** wächst Schritt für Schritt (DIVIDE = blau, MERGE = grün)
@@ -106,7 +106,7 @@ cd BinarySearch
 java -jar target/AlgoDemo.jar
 ```
 
-Das Build-Profil wird automatisch anhand des Betriebssystems erkannt und bündelt die passenden JavaFX-Natives — kein separates JavaFX nötig.
+Das Build-Profil wird automatisch anhand des Betriebssystems erkannt und bündelt die passenden JavaFX-Natives. Kein separates JavaFX nötig.
 
 | Plattform | Natives im JAR |
 | --- | --- |
