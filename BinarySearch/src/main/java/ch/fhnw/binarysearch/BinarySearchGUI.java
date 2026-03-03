@@ -18,10 +18,12 @@ public class BinarySearchGUI extends Application {
     private InfoSection infoSection;
     private ControlSection controlSection;
     private int[] currentArray = new int[]{};
+    private Stage currentStage;
 
     // Startet die JavaFX Anwendung mit den 4 Sections die initialisiert werden.
     @Override
     public void start(Stage stage) {
+        this.currentStage = stage;
         binarySearchEngine = new BinarySearchEngine();
         BorderPane root = new BorderPane();
 
@@ -29,7 +31,8 @@ public class BinarySearchGUI extends Application {
         inputSection = new InputSection(this::handleApply);
         controlSection = new ControlSection(
                 this::handleStep,
-                this::handleUndo
+                this::handleUndo,
+                this::handleBack
         );
         infoSection = new InfoSection();
 
@@ -77,6 +80,17 @@ public class BinarySearchGUI extends Application {
             inputSection.showSuccess("Array und Suchwert erfolgreich geladen");
         } catch (IllegalArgumentException e) {
             inputSection.showError(e.getMessage());
+        }
+    }
+
+    private void handleBack() {
+        try {
+            ch.fhnw.MainMenu menu = new ch.fhnw.MainMenu();
+            Stage menuStage = new Stage();
+            menu.start(menuStage);
+            currentStage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

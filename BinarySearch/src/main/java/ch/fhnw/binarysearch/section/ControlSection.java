@@ -8,7 +8,7 @@ import ch.fhnw.components.StyledButton;
 
 public class ControlSection extends VBox {
     //Konstruktor, bekommt die Runnables, einen Startknopf, für die Methoden in der GUI Klasse
-    public ControlSection(Runnable onStep, Runnable onUndo) {
+    public ControlSection(Runnable onStep, Runnable onUndo, Runnable onBack) {
         setPadding(new Insets(20));
         setSpacing(10);
         setAlignment(Pos.TOP_CENTER);
@@ -16,6 +16,7 @@ public class ControlSection extends VBox {
 
         Button nextStepBtn = new StyledButton("Next Step ->", onStep, "#a7adba");
         Button undoBtn = new StyledButton("<- Undo", onUndo, "#a7adba");
-        getChildren().addAll(nextStepBtn, undoBtn);
+        Button backBtn = new StyledButton("<- Menü", onBack, "#343d46");
+        getChildren().addAll(nextStepBtn, undoBtn, backBtn);
     }
 }

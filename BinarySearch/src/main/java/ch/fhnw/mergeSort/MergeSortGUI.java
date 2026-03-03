@@ -16,6 +16,7 @@ import java.util.List;
 
 public class MergeSortGUI extends Application {
     private MergeSortEngine engine;
+    private Stage currentStage;
 
     private ControlSection controlSection;
     private VariablesSection variablesSection;
@@ -24,6 +25,7 @@ public class MergeSortGUI extends Application {
 
     @Override
     public void start(Stage stage) {
+        this.currentStage = stage;
         //Engine initialisierung und generierung von alles Schritten
         engine = new MergeSortEngine();
         engine.generateSteps();
@@ -32,7 +34,8 @@ public class MergeSortGUI extends Application {
                 this::handleReset,
                 this::handleUndo,
                 this::handleStep,
-                this::handleApply
+                this::handleApply,
+                this::handleBack
         );
 
         variablesSection = new VariablesSection();
@@ -68,6 +71,17 @@ public class MergeSortGUI extends Application {
     private void handleStep() {
         engine.step();
         updateAllSections();
+    }
+
+    private void handleBack() {
+        try {
+            ch.fhnw.MainMenu menu = new ch.fhnw.MainMenu();
+            Stage menuStage = new Stage();
+            menu.start(menuStage);
+            currentStage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleApply() {

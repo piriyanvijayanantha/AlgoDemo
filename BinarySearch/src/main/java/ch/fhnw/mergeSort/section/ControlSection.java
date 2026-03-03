@@ -18,7 +18,7 @@ public class ControlSection extends VBox {
     private final StyledButton applyBtn;
     private final Label stepLabel;
 
-    public ControlSection(Runnable onReset, Runnable onUndo, Runnable onStep, Runnable onApply) {
+    public ControlSection(Runnable onReset, Runnable onUndo, Runnable onStep, Runnable onApply, Runnable onBack) {
         setPadding(new Insets(15, 20, 15, 20));
         setSpacing(10);
         setStyle("-fx-background-color: #f5f5f5; -fx-border-color: #343d46; -fx-border-width: 0 0 2 0;");
@@ -33,6 +33,7 @@ public class ControlSection extends VBox {
         HBox buttonRow = new HBox(15);
         buttonRow.setAlignment(Pos.CENTER);
 
+        StyledButton backBtn = new StyledButton("<- Menü", onBack, "#343d46");
         resetBtn = new StyledButton("Reset", onReset, "#a7adba");
         undoBtn = new StyledButton("Undo", onUndo, "#a7adba");
         stepBtn = new StyledButton("Nächste Step", onStep, "#a7adba");
@@ -42,7 +43,7 @@ public class ControlSection extends VBox {
 
         stepLabel = new Label("Schritt 1 von ?");
 
-        buttonRow.getChildren().addAll(resetBtn, undoBtn, stepBtn, spacer, stepLabel);
+        buttonRow.getChildren().addAll(backBtn, resetBtn, undoBtn, stepBtn, spacer, stepLabel);
 
         // Beide Zeilen in die VBox
         getChildren().addAll(arrayRow, buttonRow);
