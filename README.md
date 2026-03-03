@@ -101,7 +101,14 @@ cd BinarySearch
 java -jar target/AlgoDemo.jar
 ```
 
-Die JAR enthält alle Plattform-Natives (Windows, macOS Intel/Apple Silicon, Linux) — kein separates JavaFX nötig.
+Das Build-Profil wird automatisch anhand des Betriebssystems erkannt und bündelt die passenden JavaFX-Natives — kein separates JavaFX nötig.
+
+| Plattform | Natives im JAR |
+| --- | --- |
+| macOS Apple Silicon | `mac-aarch64` |
+| macOS Intel | `mac` |
+| Windows | `win` |
+| Linux | `linux` |
 
 ---
 
