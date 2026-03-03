@@ -15,7 +15,7 @@ nachzuvollziehen. Jeder Schritt kann vorwärts und rückwärts navigiert werden.
 
 ### Binary Search
 
-![Binary Search Screenshot](Dokumentation/images/BinarySearchScreenShot.png)
+![Binary Search Screenshot](dokumentation/images/BinarySearchScreenShot.png)
 
 Visualisiert die binäre Suche auf einem sortierten Array mit Zeigern für `i`, `m` und `j`.
 
@@ -42,7 +42,7 @@ Die Engine berechnet je nach Invariante die korrekten Startwerte, die Mittelpunk
 
 ### MergeSort
 
-![MergeSort Screenshot](Dokumentation/images/MergeSortScreenshot.png)
+![MergeSort Screenshot](dokumentation/images/MergeSortScreenshot.png)
 
 Visualisiert den rekursiven MergeSort-Algorithmus mit wachsendem Rekursionsbaum.
 
