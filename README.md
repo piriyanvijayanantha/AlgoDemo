@@ -1,18 +1,21 @@
 # Algorithmen-Demonstrator
 
-Interaktives JavaFX-Tool zur schrittweisen Visualisierung von Algorithmen — entwickelt als iPro-Projekt an der **FHNW Hochschule für Informatik** für Studierende des Moduls Prog1.
+Interaktives JavaFX-Tool zur schrittweisen Visualisierung von Algorithmen, entwickelt als induviduelles Softwareprojekt an der FHNW Hochschule für Informatik für Studierende des Moduls Programmieren 1.
 
 ---
 
 ## Übersicht
 
-Der Algorithmen-Demonstrator ermöglicht es, zwei klassische Algorithmen der Prog1-Vorlesung **Schritt für Schritt** nachzuvollziehen. Jeder Schritt kann vorwärts und rückwärts navigiert werden. Eigene Eingaben sind jederzeit möglich.
+Der Algorithmen-Demonstrator ermöglicht es, zwei klassische Algorithmen der Prog1-Vorlesung Schritt für Schritt
+nachzuvollziehen. Jeder Schritt kann vorwärts und rückwärts navigiert werden. Eigene Eingaben sind jederzeit möglich.
 
 ---
 
 ## Algorithmen
 
 ### Binary Search
+
+![Binary Search Screenshot](Dokumentation/images/BinarySearchScreenShot.png)
 
 Visualisiert die binäre Suche auf einem sortierten Array mit Zeigern für `i`, `m` und `j`.
 
@@ -38,6 +41,8 @@ Die Engine berechnet je nach Invariante die korrekten Startwerte, die Mittelpunk
 ---
 
 ### MergeSort
+
+![MergeSort Screenshot](Dokumentation/images/MergeSortScreenshot.png)
 
 Visualisiert den rekursiven MergeSort-Algorithmus mit wachsendem Rekursionsbaum.
 
